@@ -1,0 +1,9 @@
+Package: com.developlab.batteryinfo
+Name: Battery Info
+Version: 1.0
+Architecture: iphoneos-arm
+Description: An awesome application!
+Maintainer: developlab
+Author: developlab
+Section: Utilities
+Depends: firmware (>= 12.2) | ${LIBSWIFT}
