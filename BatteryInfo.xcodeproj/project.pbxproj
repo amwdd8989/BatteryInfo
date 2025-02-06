@@ -3,44 +3,51 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		179E78962D1D537D009C29C9 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179E78952D1D537D009C29C9 /* RootViewController.swift */; };
+		1731F9BB2D50D02600AA1FD5 /* DeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1731F9BA2D50D02600AA1FD5 /* DeviceController.m */; };
+		1731F9D02D519E0400AA1FD5 /* SettingsBatteryHelper in Resources */ = {isa = PBXBuildFile; fileRef = 1731F9CF2D519E0400AA1FD5 /* SettingsBatteryHelper */; };
 		179E78992D1D5E49009C29C9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179E78982D1D5E49009C29C9 /* UIKit.framework */; };
 		179E789B2D1D5E4F009C29C9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179E789A2D1D5E4F009C29C9 /* CoreGraphics.framework */; };
 		179E789D2D1D5E55009C29C9 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179E789C2D1D5E55009C29C9 /* IOKit.framework */; };
-		179E78B42D1D797C009C29C9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 179E78AD2D1D797C009C29C9 /* Localizable.strings */; };
-		179E78B52D1D797C009C29C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 179E78AF2D1D797C009C29C9 /* InfoPlist.strings */; };
-		179E78BC2D1D7991009C29C9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 179E78B82D1D7991009C29C9 /* Localizable.strings */; };
-		179E78BD2D1D7991009C29C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 179E78BA2D1D7991009C29C9 /* InfoPlist.strings */; };
+		17B0EDC02D49C07B00F77781 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 17B0EDBF2D49C07B00F77781 /* Localizable.xcstrings */; };
+		17B0EDC22D49C0A600F77781 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 17B0EDC12D49C0A600F77781 /* InfoPlist.xcstrings */; };
+		17BC113C2D521A79009924BF /* BatteryManufacturer.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 17BC113B2D521A79009924BF /* BatteryManufacturer.xcstrings */; };
 		17D996D32D1D50A60056394C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D996D22D1D50A60056394C /* AppDelegate.swift */; };
 		17D996DC2D1D50A60056394C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D996DB2D1D50A60056394C /* Assets.xcassets */; };
 		17D996DF2D1D50A60056394C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D996DD2D1D50A60056394C /* LaunchScreen.storyboard */; };
-		17F66BE42D2A0F510097A29A /* BatteryInfoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F66BE32D2A0F510097A29A /* BatteryInfoEntity.swift */; };
 		17F66BE62D2A1C7A0097A29A /* BatteryHelper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17F66BE52D2A1C7A0097A29A /* BatteryHelper.a */; };
+		17F66BEE2D2A52580097A29A /* BatteryDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F66BED2D2A52580097A29A /* BatteryDataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1731F9B92D50D02600AA1FD5 /* DeviceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceController.h; sourceTree = "<group>"; };
+		1731F9BA2D50D02600AA1FD5 /* DeviceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceController.m; sourceTree = "<group>"; };
+		1731F9CF2D519E0400AA1FD5 /* SettingsBatteryHelper */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = SettingsBatteryHelper; sourceTree = "<group>"; };
 		179E78902D1D52A0009C29C9 /* BatteryInfo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BatteryInfo-Bridging-Header.h"; sourceTree = "<group>"; };
 		179E78912D1D52A0009C29C9 /* BatteryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatteryHelper.h; sourceTree = "<group>"; };
-		179E78952D1D537D009C29C9 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		179E78982D1D5E49009C29C9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		179E789A2D1D5E4F009C29C9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		179E789C2D1D5E55009C29C9 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		179E78AE2D1D797C009C29C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
-		179E78B02D1D797C009C29C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
-		179E78B92D1D7991009C29C9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = Localizable.strings; sourceTree = "<group>"; };
-		179E78BB2D1D7991009C29C9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = InfoPlist.strings; sourceTree = "<group>"; };
+		17B0EDBF2D49C07B00F77781 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		17B0EDC12D49C0A600F77781 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = InfoPlist.xcstrings; path = BatteryInfo/InfoPlist.xcstrings; sourceTree = SOURCE_ROOT; };
+		17BC113B2D521A79009924BF /* BatteryManufacturer.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = BatteryManufacturer.xcstrings; sourceTree = "<group>"; };
 		17D996CF2D1D50A60056394C /* BatteryInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BatteryInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D996D22D1D50A60056394C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17D996DB2D1D50A60056394C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17D996DE2D1D50A60056394C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17D996E02D1D50A60056394C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		17F66BE32D2A0F510097A29A /* BatteryInfoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryInfoEntity.swift; sourceTree = "<group>"; };
 		17F66BE52D2A1C7A0097A29A /* BatteryHelper.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = BatteryHelper.a; sourceTree = "<group>"; };
+		17F66BED2D2A52580097A29A /* BatteryDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryDataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		17BC10FD2D51F6E4009924BF /* Utils */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utils; sourceTree = "<group>"; };
+		17F66BE92D2A24BC0097A29A /* ViewController */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewController; sourceTree = "<group>"; };
+		17F66BEB2D2A25840097A29A /* Entity */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Entity; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		17D996CC2D1D50A60056394C /* Frameworks */ = {
@@ -67,25 +74,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		179E78AC2D1D797C009C29C9 /* en.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				179E78AD2D1D797C009C29C9 /* Localizable.strings */,
-				179E78AF2D1D797C009C29C9 /* InfoPlist.strings */,
-			);
-			path = en.lproj;
-			sourceTree = "<group>";
-		};
-		179E78B72D1D7991009C29C9 /* zh-Hans.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				179E78B82D1D7991009C29C9 /* Localizable.strings */,
-				179E78BA2D1D7991009C29C9 /* InfoPlist.strings */,
-			);
-			name = "zh-Hans.lproj";
-			path = "BatteryInfo/zh-Hans.lproj";
-			sourceTree = SOURCE_ROOT;
-		};
 		17D996C62D1D50A50056394C = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +94,16 @@
 		17D996D12D1D50A60056394C /* BatteryInfo */ = {
 			isa = PBXGroup;
 			children = (
+				17BC10FD2D51F6E4009924BF /* Utils */,
+				1731F9CF2D519E0400AA1FD5 /* SettingsBatteryHelper */,
+				1731F9B92D50D02600AA1FD5 /* DeviceController.h */,
+				1731F9BA2D50D02600AA1FD5 /* DeviceController.m */,
+				17B0EDBF2D49C07B00F77781 /* Localizable.xcstrings */,
+				17B0EDC12D49C0A600F77781 /* InfoPlist.xcstrings */,
+				17BC113B2D521A79009924BF /* BatteryManufacturer.xcstrings */,
+				17F66BEC2D2A52460097A29A /* Controller */,
+				17F66BEB2D2A25840097A29A /* Entity */,
+				17F66BE92D2A24BC0097A29A /* ViewController */,
 				17F66BE52D2A1C7A0097A29A /* BatteryHelper.a */,
 				17D996D22D1D50A60056394C /* AppDelegate.swift */,
 				17D996DB2D1D50A60056394C /* Assets.xcassets */,
@@ -113,12 +111,16 @@
 				17D996E02D1D50A60056394C /* Info.plist */,
 				179E78912D1D52A0009C29C9 /* BatteryHelper.h */,
 				179E78902D1D52A0009C29C9 /* BatteryInfo-Bridging-Header.h */,
-				179E78952D1D537D009C29C9 /* RootViewController.swift */,
-				179E78B72D1D7991009C29C9 /* zh-Hans.lproj */,
-				179E78AC2D1D797C009C29C9 /* en.lproj */,
-				17F66BE32D2A0F510097A29A /* BatteryInfoEntity.swift */,
 			);
 			path = BatteryInfo;
+			sourceTree = "<group>";
+		};
+		17F66BEC2D2A52460097A29A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				17F66BED2D2A52580097A29A /* BatteryDataController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +137,11 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				17BC10FD2D51F6E4009924BF /* Utils */,
+				17F66BE92D2A24BC0097A29A /* ViewController */,
+				17F66BEB2D2A25840097A29A /* Entity */,
 			);
 			name = BatteryInfo;
 			productName = BatteryInfo;
@@ -181,11 +188,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				179E78BC2D1D7991009C29C9 /* Localizable.strings in Resources */,
-				179E78BD2D1D7991009C29C9 /* InfoPlist.strings in Resources */,
 				17D996DF2D1D50A60056394C /* LaunchScreen.storyboard in Resources */,
-				179E78B52D1D797C009C29C9 /* InfoPlist.strings in Resources */,
-				179E78B42D1D797C009C29C9 /* Localizable.strings in Resources */,
+				1731F9D02D519E0400AA1FD5 /* SettingsBatteryHelper in Resources */,
+				17B0EDC02D49C07B00F77781 /* Localizable.xcstrings in Resources */,
+				17BC113C2D521A79009924BF /* BatteryManufacturer.xcstrings in Resources */,
+				17B0EDC22D49C0A600F77781 /* InfoPlist.xcstrings in Resources */,
 				17D996DC2D1D50A60056394C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,46 +205,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				17D996D32D1D50A60056394C /* AppDelegate.swift in Sources */,
-				17F66BE42D2A0F510097A29A /* BatteryInfoEntity.swift in Sources */,
-				179E78962D1D537D009C29C9 /* RootViewController.swift in Sources */,
+				17F66BEE2D2A52580097A29A /* BatteryDataController.swift in Sources */,
+				1731F9BB2D50D02600AA1FD5 /* DeviceController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		179E78AD2D1D797C009C29C9 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				179E78AE2D1D797C009C29C9 /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		179E78AF2D1D797C009C29C9 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				179E78B02D1D797C009C29C9 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		179E78B82D1D7991009C29C9 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				179E78B92D1D7991009C29C9 /* zh-Hans */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		179E78BA2D1D7991009C29C9 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				179E78BB2D1D7991009C29C9 /* zh-Hans */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		17D996DD2D1D50A60056394C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -308,6 +283,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -364,6 +340,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -374,9 +351,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = X2WABLB38D;
 				FRAMEWORK_SEARCH_PATHS = (
 					/System/Library/Frameworks,
 					/System/Library/PrivateFrameworks,
@@ -403,9 +381,10 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.developlab.BatteryInfo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "BatteryInfo/BatteryInfo-Bridging-Header.h";
@@ -421,9 +400,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = X2WABLB38D;
 				FRAMEWORK_SEARCH_PATHS = (
 					/System/Library/Frameworks,
 					/System/Library/PrivateFrameworks,
@@ -450,9 +430,10 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.developlab.BatteryInfo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "BatteryInfo/BatteryInfo-Bridging-Header.h";

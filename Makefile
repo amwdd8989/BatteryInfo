@@ -1,4 +1,4 @@
-。ARCHS := arm64
+ARCHS := arm64
 TARGET := iphone:clang:latest:12.2
 
 include $(THEOS)/makefiles/common.mk
@@ -20,7 +20,7 @@ before-package::
 	@echo -e "\033[32mRemoving _CodeSignature folder..."
 	@rm -rf $(THEOS_STAGING_DIR)/Applications/$(XCODEPROJ_NAME).app/_CodeSignature
 
-# 包装完成后重命名为 .tipa
+# 打包后重命名为 .tipa
 after-package::
 	@echo -e "\033[32mRenaming .ipa to .tipa...\033[0m"
 	@mv ./packages/com.developlab.batteryinfo_1.0.ipa ./packages/com.developlab.batteryinfo_1.0.tipa || @echo -e "\033[31mNo .ipa file found.\033[0m"
