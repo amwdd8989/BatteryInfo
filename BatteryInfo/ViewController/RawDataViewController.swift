@@ -2,21 +2,19 @@ import UIKit
 
 class RawDataViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    var batteryInfo: [(key: String, value: Any)] = []
-    var tableView = UITableView()
-
+    private var batteryInfo: [(key: String, value: Any)] = []
+    private var tableView = UITableView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString("RawData", comment: "")
-        view.backgroundColor = .white
 
         if #available(iOS 15.0, *) {
             tableView = UITableView(frame: .zero, style: .insetGrouped)
         } else {
             tableView = UITableView()
         }
-        // 初始化 TableView
-        tableView.frame = view.bounds
+        // 初始化 UITableView
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -34,7 +32,30 @@ class RawDataViewController: UIViewController, UITableViewDataSource, UITableVie
             action: #selector(reloadBatteryInfo)
         )
 
-        setupCopyButton()
+        let copyButton = UIButton(type: .system)
+        copyButton.setTitle(NSLocalizedString("CopyAllData", comment: ""), for: .normal)
+        copyButton.addTarget(self, action: #selector(copyBatteryInfo), for: .touchUpInside)
+        copyButton.backgroundColor = .systemBlue
+        copyButton.setTitleColor(.white, for: .normal)
+        copyButton.layer.cornerRadius = 8
+        view.addSubview(copyButton)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        copyButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            // TableView 约束
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: copyButton.topAnchor, constant: -10),
+            
+            // CopyButton 约束
+            copyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            copyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            copyButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            copyButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
         
         reloadBatteryInfo()
     }
@@ -63,6 +84,11 @@ class RawDataViewController: UIViewController, UITableViewDataSource, UITableVie
         return batteryInfo.count
     }
 
+    // MARK: - 设置每个分组的底部标题 可以为分组设置尾部文本，如果没有尾部可以返回 nil
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return NSLocalizedString("BatteryDataSourceMessage", comment: "")
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
@@ -77,21 +103,6 @@ class RawDataViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
 
         return cell
-    }
-    
-    func setupCopyButton() {
-        let copyButton = UIButton(type: .system)
-        copyButton.setTitle(NSLocalizedString("CopyAllData", comment: ""), for: .normal)
-        copyButton.addTarget(self, action: #selector(copyBatteryInfo), for: .touchUpInside)
-
-        // 按钮位置设置
-        copyButton.frame = CGRect(x: 20, y: view.frame.height - 80, width: view.bounds.width - 40, height: 40)
-        copyButton.backgroundColor = .systemBlue
-        copyButton.setTitleColor(.white, for: .normal)
-        copyButton.layer.cornerRadius = 8
-        copyButton.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
-
-        view.addSubview(copyButton)
     }
     
     @objc func copyBatteryInfo() {

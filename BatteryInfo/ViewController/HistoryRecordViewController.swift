@@ -1,12 +1,172 @@
 import Foundation
 import UIKit
 
-class HistoryRecordViewController: UIViewController {
+class HistoryRecordViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    private var tableView = UITableView()
+    
+    private var historyDataRecords: [BatteryDataRecord] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            view.backgroundColor = .white
+        }
+        
         title = NSLocalizedString("History", comment: "")
+        
+        // iOS 15 之后的版本使用新的UITableView样式
+        if #available(iOS 15.0, *) {
+            tableView = UITableView(frame: .zero, style: .insetGrouped)
+        } else {
+            tableView = UITableView(frame: .zero, style: .grouped)
+        }
+
+        // 设置表格视图的代理和数据源
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        // 注册表格单元格
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+
+        // 将表格视图添加到主视图
+        view.addSubview(tableView)
+
+        // 设置表格视图的布局
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadHistoryDataRecords()
+        
+        // 防止 ViewController 释放后仍然执行 UI 更新
+        DispatchQueue.main.async {
+            if self.isViewLoaded && self.view.window != nil {
+                // 刷新列表
+                self.tableView.reloadData()
+            }
+        }
+        
+    }
+    
+    private func loadHistoryDataRecords() {
+        
+        historyDataRecords = BatteryRecordDatabaseManager.shared.fetchAllRecords()
+        
+    }
+    
+    // MARK: - 设置总分组数量
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    // MARK: - 列表总长度
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 1 {
+            return historyDataRecords.count
+        }
+        return 1
+    }
+    
+    // MARK: - 设置每个分组的顶部标题
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 && historyDataRecords.count == 0 {
+            return NSLocalizedString("NoRecord", comment: "")
+        }
+        return nil
+    }
+    
+    // MARK: - 创建cell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+        
+        // 防止出现复用bug
+        cell.textLabel?.textAlignment = .natural
+        
+        if indexPath.section == 0 {
+            cell.textLabel?.text = NSLocalizedString("ManualAddRecord", comment: "")
+            cell.textLabel?.textAlignment = .center
+        } else if indexPath.section == 1 {
+            let recordData = self.historyDataRecords[indexPath.row]
+            
+            if let maximumCapacity = recordData.maximumCapacity {
+                // 这种情况下应该是用户自己添加的
+                cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), String(maximumCapacity)) + "\n" +
+                String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), String(recordData.cycleCount)) + "\n" +
+                String.localizedStringWithFormat(NSLocalizedString("RecordCreateDate", comment: ""), BatteryDataController.formatTimestamp(recordData.createDate))
+            } else {
+                // 自动记录的
+                if let nominal = recordData.nominalChargeCapacity, let design = recordData.designCapacity {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), BatteryDataController.getFormatMaximumCapacity(nominalChargeCapacity: nominal, designCapacity: design)) + "\n" +
+                    String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), String(recordData.cycleCount)) + "\n" +
+                    String.localizedStringWithFormat(NSLocalizedString("RemainingCapacity", comment: ""), String(nominal)) + "\n" +
+                    String.localizedStringWithFormat(NSLocalizedString("DesignCapacity", comment: ""), String(design)) + "\n" +
+                    String.localizedStringWithFormat(NSLocalizedString("RecordCreateDate", comment: ""), BatteryDataController.formatTimestamp(recordData.createDate))
+                }
+                
+            }
+        }
+        
+        cell.textLabel?.numberOfLines = 0 // 允许换行
+        
+        return cell
+    }
+    
+    // MARK: - Cell的点击事件
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if indexPath.section == 0 {
+            
+            guard let batteryInfoDict = getBatteryInfo() as? [String: Any] else {
+                return
+            }
+            
+            let batteryInfo = BatteryRAWInfo(dict: batteryInfoDict)
+            
+            // 记录历史数据
+            if let cycleCount = batteryInfo.cycleCount, let nominalChargeCapacity = batteryInfo.nominalChargeCapacity, let designCapacity = batteryInfo.designCapacity {
+                
+                if BatteryDataController.recordBatteryData(manualRecord: true, cycleCount: cycleCount, nominalChargeCapacity: nominalChargeCapacity, designCapacity: designCapacity) {
+                    loadHistoryDataRecords()
+                    self.tableView.insertRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+                }
+            }
+        }
+        
+    }
+    
+    // 滑动删除功能
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            if editingStyle == .delete {
+
+                let alert = UIAlertController(title: NSLocalizedString("DeleteRecordMessage", comment: ""), message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Confirm", comment: ""), style: .default, handler: { _ in
+                    // 删除记录
+                    if BatteryRecordDatabaseManager.shared.deleteRecord(byID: self.historyDataRecords[indexPath.row].id) {
+                        self.loadHistoryDataRecords()
+                        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    }
+                }))
+                present(alert, animated: true)
+            }
+        }
+    }
+    
     
 }

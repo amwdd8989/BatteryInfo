@@ -11,7 +11,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private let tableTitleList = [nil, NSLocalizedString("MaximumCapacityAccuracy", comment: ""), NSLocalizedString("About", comment: "")]
     
-    private let tableCellList = [[NSLocalizedString("ShowSettingsBatteryInfo", comment: ""), NSLocalizedString("DataRecordSettings", comment: "")], [NSLocalizedString("KeepOriginal", comment: ""), NSLocalizedString("Ceiling", comment: ""), NSLocalizedString("Round", comment: ""), NSLocalizedString("Floor", comment: "")], [NSLocalizedString("Version", comment: ""), "GitHub"]]
+    private let tableCellList = [[NSLocalizedString("AutoRefreshDataViewSetting", comment: ""), NSLocalizedString("ForceShowChargeingData", comment: ""), NSLocalizedString("DataRecordSettings", comment: "")], [NSLocalizedString("KeepOriginal", comment: ""), NSLocalizedString("Ceiling", comment: ""), NSLocalizedString("Round", comment: ""), NSLocalizedString("Floor", comment: "")], [NSLocalizedString("Version", comment: ""), "GitHub"]]
+    // NSLocalizedString("ShowSettingsBatteryInfo", comment: "")
     
     // 标记一下每个分组的编号，防止新增一组还需要修改好几处的代码
     private let maximumCapacityAccuracyAtSection = 1
@@ -48,7 +49,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        
     }
     
     // MARK: - 设置总分组数量
@@ -76,14 +76,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.textLabel?.numberOfLines = 0 // 允许换行
         
         if indexPath.section == 0 {
-            if indexPath.row == 0 {
+            if indexPath.row == 0 || indexPath.row == 1 {
                 let switchView = UISwitch(frame: .zero)
                 switchView.tag = indexPath.row // 设置识别id
-                switchView.isOn = SettingsUtils.instance.getShowSettingsBatteryInfo()
+//                switchView.isOn = SettingsUtils.instance.getShowSettingsBatteryInfo()
+                if indexPath.row == 0 {
+                    switchView.isOn = SettingsUtils.instance.getAutoRefreshDataView()
+                } else {
+                    switchView.isOn = SettingsUtils.instance.getForceShowChargeingData()
+                }
                 switchView.addTarget(self, action: #selector(self.onSwitchChanged(_:)), for: .valueChanged)
                 cell.accessoryView = switchView
                 cell.selectionStyle = .none
-            } else if indexPath.row == 1 {
+            } else if indexPath.row == 2 {
                 cell.accessoryType = .disclosureIndicator
                 cell.selectionStyle = .default // 启用选中效果
             }
@@ -120,7 +125,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
-            if indexPath.row == 1 {
+            if indexPath.row == 2 {
                 let dataRecordSettingsViewController = DataRecordSettingsViewController()
                 dataRecordSettingsViewController.hidesBottomBarWhenPushed = true // 隐藏底部导航栏
                 self.navigationController?.pushViewController(dataRecordSettingsViewController, animated: true)
@@ -143,7 +148,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @objc func onSwitchChanged(_ sender: UISwitch) {
         if sender.tag == 0 {
-            SettingsUtils.instance.setShowSettingsBatteryInfo(value: sender.isOn)
+            SettingsUtils.instance.setAutoRefreshDataView(value: sender.isOn)
+        } else if sender.tag == 1 {
+            SettingsUtils.instance.setForceShowChargeingData(value: sender.isOn)
         }
     }
     

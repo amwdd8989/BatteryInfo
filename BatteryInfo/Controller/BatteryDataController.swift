@@ -2,20 +2,22 @@ import Foundation
 
 class BatteryDataController {
     
-    // 当前电池电量
-    var currentCapacity: Int?
-    // IO接口提供的电池循环次数
-    var IOCycleCount: Int?
-    // IO接口提供的电池健康度
-    var IONominalChargeCapacity: Int?
-    // Cache的电池循环次数
-    var CacheCycleCount: Int?
-    // Cache的电池电池剩余容量
-    
     /// 设置中的电池健康数据
     struct SettingsBatteryData {
         var cycleCount: Int?
         var maximumCapacityPercent: Int?
+    }
+    
+    // 检查Root权限的方法
+    static func checkRunTimePermission() -> Bool {
+        guard let batteryInfoDict = getBatteryInfo() as? [String: Any] else {
+            print("Failed to fetch battery info")
+            return false
+        }
+        let batteryInfo = BatteryRAWInfo(dict: batteryInfoDict)
+        
+        // 记录历史数据
+        return batteryInfo.cycleCount != nil
     }
 
     static func getSettingsBatteryInfoData() -> SettingsBatteryData? {
@@ -67,6 +69,70 @@ class BatteryDataController {
         case .Floor:
             return String(Int(floor(rawValue))) // 直接去掉小数
         }
+    }
+
+    static func recordBatteryData(manualRecord: Bool, cycleCount: Int, nominalChargeCapacity: Int, designCapacity: Int) -> Bool {
+        
+        let databaseManager = BatteryRecordDatabaseManager.shared
+        let settingsUtils = SettingsUtils.instance
+        
+        // 判断是否开启了记录
+        if !settingsUtils.getEnableRecordBatteryData() {
+            return true
+        }
+        
+        if manualRecord { // 手动添加一条记录
+            return databaseManager.insertRecord(BatteryDataRecord(cycleCount: cycleCount, nominalChargeCapacity: nominalChargeCapacity, designCapacity: designCapacity))
+        }
+        
+        switch settingsUtils.getRecordFrequency() {
+        case .Automatic:
+            if databaseManager.getRecordCount() == 0 { // 如果数据库还没数据就直接先创建一个
+                return databaseManager.insertRecord(BatteryDataRecord(cycleCount: cycleCount, nominalChargeCapacity: nominalChargeCapacity, designCapacity: designCapacity))
+            }
+            let lastRecord = databaseManager.getLatestRecord()
+            if lastRecord != nil {
+                if !isSameDay(timestamp1: Int(Date().timeIntervalSince1970), timestamp2: Int(lastRecord?.createDate ?? 0)) ||
+                    lastRecord?.cycleCount != cycleCount ||
+                    lastRecord?.nominalChargeCapacity != nominalChargeCapacity {
+                    return databaseManager.insertRecord(BatteryDataRecord(cycleCount: cycleCount, nominalChargeCapacity: nominalChargeCapacity, designCapacity: designCapacity))
+                }
+            }
+        case .EveryDay:
+            if databaseManager.getRecordCount() == 0 { // 如果数据库还没数据就直接先创建一个
+                return databaseManager.insertRecord(BatteryDataRecord(cycleCount: cycleCount, nominalChargeCapacity: nominalChargeCapacity, designCapacity: designCapacity))
+            }
+            let lastRecord = databaseManager.getLatestRecord()
+            if lastRecord != nil {
+                if !isSameDay(timestamp1: Int(Date().timeIntervalSince1970), timestamp2: Int(lastRecord?.createDate ?? 0)) { // 判断与当前的记录是否是同一天
+                    return databaseManager.insertRecord(BatteryDataRecord(cycleCount: cycleCount, nominalChargeCapacity: nominalChargeCapacity, designCapacity: designCapacity))
+                }
+            }
+            
+        default: return false
+        }
+        
+        
+        return false
+    }
+    
+    /// 比较是否是同一天
+    static func isSameDay(timestamp1: Int, timestamp2: Int) -> Bool {
+        let date1 = Date(timeIntervalSince1970: TimeInterval(timestamp1))
+        let date2 = Date(timeIntervalSince1970: TimeInterval(timestamp2))
+
+        return Calendar.current.isDate(date1, inSameDayAs: date2)
+    }
+    
+    /// 格式化时间
+    static func formatTimestamp(_ timestamp: Int) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(timestamp)) // 时间戳转换为 Date
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium  // 按用户地区自动适配年月日格式
+        formatter.timeStyle = .short   // 按用户地区自动适配时分格式
+        formatter.locale = Locale.autoupdatingCurrent // 自动适配用户的地区和语言
+        
+        return formatter.string(from: date)
     }
 
     

@@ -7,9 +7,11 @@ class DataRecordSettingsViewController: UIViewController, UITableViewDelegate, U
     
     private let settingsUtils = SettingsUtils.instance
     
-    private let tableTitleList = [nil, NSLocalizedString("RecordFrequencySettings", comment: "记录频率设置")]
+    private let tableTitleList = [nil, NSLocalizedString("RecordFrequencySettings", comment: "记录频率设置"), nil]
     
-    private let tableCellList = [[NSLocalizedString("Enable", comment: "启用"), NSLocalizedString("HistoryRecordViewInHomeView", comment: "在主界面显示历史记录界面")], [NSLocalizedString("Automatic", comment: ""), NSLocalizedString("EveryDay", comment: ""), NSLocalizedString("Manual", comment: "")]]
+    private let tableCellList = [[NSLocalizedString("Enable", comment: "启用"), NSLocalizedString("HistoryRecordViewInHomeView", comment: "在主界面显示历史记录界面")], [NSLocalizedString("Automatic", comment: ""), NSLocalizedString("EveryDay", comment: ""), NSLocalizedString("Manual", comment: "")], [NSLocalizedString("DeleteAllRecords", comment: "")]]
+    
+    private var reloadMainTabBar = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +45,12 @@ class DataRecordSettingsViewController: UIViewController, UITableViewDelegate, U
         ])
         
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        if reloadMainTabBar {
+            NotificationCenter.default.post(name: Notification.Name("ShowHistoryViewChanged"), object: nil) // 通知主界面更新视图
+        }
     }
     
     // MARK: - 设置总分组数量
@@ -85,6 +93,9 @@ class DataRecordSettingsViewController: UIViewController, UITableViewDelegate, U
             } else {
                 cell.accessoryType = .none
             }
+        } else if indexPath.section == 2 {
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.textColor = .systemRed
         }
         
         return cell
@@ -101,6 +112,28 @@ class DataRecordSettingsViewController: UIViewController, UITableViewDelegate, U
             settingsUtils.setRecordFrequency(value: indexPath.row + 1)
             // 设置当前的cell选中状态
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        } else if indexPath.section == 2 {
+            // 删除全部数据的按钮
+            let alert = UIAlertController(
+                    title: NSLocalizedString("DeleteAllRecordsTitle", comment: "确定要删除所有数据吗？"),
+                    message: NSLocalizedString("DeleteAllRecordsMessage", comment: "此操作会删除所有历史记录"),
+                    preferredStyle: .alert
+                )
+
+                // "确定" 按钮（红色，左边）
+                let deleteAction = UIAlertAction(title: NSLocalizedString("Confirm", comment: ""), style: .destructive) { _ in
+                    BatteryRecordDatabaseManager.shared.deleteAllRecords()
+                }
+
+                // "取消" 按钮（蓝色，右边）
+                let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
+
+                // 添加按钮，iOS 会自动按照规范排列
+                alert.addAction(deleteAction) // 红色
+                alert.addAction(cancelAction) // 蓝色
+
+                // 显示弹窗
+                present(alert, animated: true, completion: nil)
         }
     }
     
@@ -110,6 +143,7 @@ class DataRecordSettingsViewController: UIViewController, UITableViewDelegate, U
             settingsUtils.setRecordFrequency(value: .Toogle) // 切换启用的开关
         } else if sender.tag == 1 {
             settingsUtils.setShowHistoryRecordViewInHomeView(value: sender.isOn) // 切换显示在主界面的开关
+            reloadMainTabBar = true // 更改刷新标记
         }
     }
     

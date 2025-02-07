@@ -17,6 +17,22 @@
         }
       }
     },
+    "Alert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alert"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提示"
+          }
+        }
+      }
+    },
     "AllData" : {
       "localizations" : {
         "en" : {
@@ -49,6 +65,38 @@
         }
       }
     },
+    "AutoRefreshDataViewSetting" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule battery data refresh"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "定时刷新电池数据"
+          }
+        }
+      }
+    },
+    "BatteryDataSourceMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery data source is from device IOKit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池数据来源于设备IOKit"
+          }
+        }
+      }
+    },
     "BatteryManufacturer" : {
       "localizations" : {
         "en" : {
@@ -61,6 +109,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "制造商: %@"
+          }
+        }
+      }
+    },
+    "CalculatedChargingPower" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculated Charging Power: %@W"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "计算充电功率: %@W"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         }
       }
@@ -97,6 +177,118 @@
         }
       }
     },
+    "ChargeDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charge Type: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前充电协议: %@"
+          }
+        }
+      }
+    },
+    "ChargeInfo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charge Information"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电信息"
+          }
+        }
+      }
+    },
+    "ChargeInfoFooterMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The charging power data is for reference only, please take the data from the power measurement device as the standard."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电功率数据仅供参考，请以功率测量设备数据为准"
+          }
+        }
+      }
+    },
+    "Charging" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charging"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电中"
+          }
+        }
+      }
+    },
+    "ChargingCurrent" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charging Current: %@A"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电电流: %@A"
+          }
+        }
+      }
+    },
+    "ChargingVoltage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charging Voltage: %@V"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电电压: %@V"
+          }
+        }
+      }
+    },
+    "CharingFull" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已充满"
+          }
+        }
+      }
+    },
     "Close" : {
       "localizations" : {
         "en" : {
@@ -109,6 +301,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关闭"
+          }
+        }
+      }
+    },
+    "Confirm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定"
           }
         }
       }
@@ -157,7 +365,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当前电池电量: %@ %"
+            "value" : "当前电池电量: %@%%"
           }
         }
       }
@@ -175,6 +383,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "当前电池温度: %@℃"
+          }
+        }
+      }
+    },
+    "CurrentUseOption" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently used opention: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前使用的协议: %@"
+          }
+        }
+      }
+    },
+    "CurrentVoltage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current Voltage: %@V"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前电压: %@V"
           }
         }
       }
@@ -212,6 +452,72 @@
         }
       }
     },
+    "DeleteAllRecords" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete All Records"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除全部记录"
+          }
+        }
+      }
+    },
+    "DeleteAllRecordsMessage" : {
+      "comment" : "此操作会删除所有历史记录",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This operation deletes all history records, and the operation is irreversible"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此操作会删除所有历史记录，此操作不可逆"
+          }
+        }
+      }
+    },
+    "DeleteAllRecordsTitle" : {
+      "comment" : "确定要删除所有数据吗？",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete all the records data?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除所有数据吗？"
+          }
+        }
+      }
+    },
+    "DeleteRecordMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm to delete this record?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认删除这条记录吗？"
+          }
+        }
+      }
+    },
     "DesignCapacity" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -242,6 +548,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设备已启动：%d天 %d小时 %d分钟"
+          }
+        }
+      }
+    },
+    "Dismiss" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dismiss"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
           }
         }
       }
@@ -295,6 +617,22 @@
         }
       }
     },
+    "ForceShowChargeingData" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charging data is still displayed when uncharged"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在未充电的状态下仍然显示充电数据"
+          }
+        }
+      }
+    },
     "History" : {
       "localizations" : {
         "en" : {
@@ -328,18 +666,18 @@
         }
       }
     },
-    "Home" : {
+    "InstantAmperage" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Home"
+            "value" : "Instant Current: %@mA"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "主页"
+            "value" : "实时电流: %@mA"
           }
         }
       }
@@ -378,6 +716,22 @@
         }
       }
     },
+    "IsCharging" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charging status: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电状态: %@"
+          }
+        }
+      }
+    },
     "KeepOriginal" : {
       "localizations" : {
         "en" : {
@@ -406,6 +760,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "手动"
+          }
+        }
+      }
+    },
+    "ManualAddRecord" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manual Add Record"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加记录"
+          }
+        }
+      }
+    },
+    "ManufacturerDataSourceMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery manufacturer information comes from the Internet and is calculated through serial number information. If there are any errors, please submit them for correction and improvement."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池制造商信息来源于网络，通过序列号信息进行推算，如有错误请提出以进行更正和改进"
           }
         }
       }
@@ -443,6 +829,118 @@
         }
       }
     },
+    "MaximumChargingHandshakeWatts" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum charging handshake watts: %@W"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最大充电握手功率: %@W"
+          }
+        }
+      }
+    },
+    "NeedRunTimePremissionMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lacking the necessary rights, data cannot be accessed. If you are using iOS or iPad OS to install, please do so in a jailbroken or TrollStore environment. If you do not have the permissions, the App will not be able to access more battery information. In future versions, you may be able to use it with restricted permissions, but in the current version, you must have the 'IOPMPowerSourceClient' rights."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缺少必要的权利，所以无法获取数据，如果您使用iOS或者iPad OS安装，请在越狱或TrollStore环境下进行安装，如果没有权限，App将无法获取更多电池信息。在未来的版本中您或许可以在权限受限的情况下使用，但是当前版本您必须拥有’IOPMPowerSourceClient’权利。"
+          }
+        }
+      }
+    },
+    "No" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "否"
+          }
+        }
+      }
+    },
+    "NoRecord" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No any record"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有记录"
+          }
+        }
+      }
+    },
+    "NotCharging" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Charging"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未充电"
+          }
+        }
+      }
+    },
+    "PowerOptionDetail" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Option %d: %@V %@A"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "协议 %d: %@V %@A"
+          }
+        }
+      }
+    },
+    "PowerOptions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charger available options: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电器可用充电档位: %@"
+          }
+        }
+      }
+    },
     "RawData" : {
       "localizations" : {
         "en" : {
@@ -471,6 +969,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "原始数据复制成功"
+          }
+        }
+      }
+    },
+    "RecordCreateDate" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record Create Date: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记录日期: %@"
           }
         }
       }
@@ -619,6 +1133,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "版本"
+          }
+        }
+      }
+    },
+    "WirelessCharger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wireless Charger: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无线充电: %@"
+          }
+        }
+      }
+    },
+    "Yes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是"
           }
         }
       }

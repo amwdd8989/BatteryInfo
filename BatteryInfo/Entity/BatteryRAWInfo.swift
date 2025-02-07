@@ -3,8 +3,9 @@ import Foundation
 // 定义一个结构体来存储IO接口提供的电池原始信息
 struct BatteryRAWInfo {
     var bootPathUpdated: Int?
-    var serialNumber: String?
-    var voltage: Int? // 电池序列号
+    var serialNumber: String? // 电池序列号
+    var voltage: Int? // 当前电压
+    var instantAmperage: Int?  // 当前电流
     var currentCapacity: Int? // 当前电量百分比
     var designCapacity: Int?  // 电池设计容量
     var nominalChargeCapacity: Int? // 电池当前的最大容量
@@ -14,6 +15,7 @@ struct BatteryRAWInfo {
     var batteryData: BatteryData?     // 嵌套 BatteryData
     var lifetimeData: LifetimeData?   // 嵌套 LifetimeData
     var kioskMode: KioskMode?         // 嵌套 KioskMode
+    var adapterDetails: AdapterDetails? // 充电器信息
     var chargerData: ChargerData?     // 嵌套 ChargerData
     var maximumCapacity: String?
 }
@@ -23,6 +25,7 @@ extension BatteryRAWInfo {
         self.bootPathUpdated = dict["BootPathUpdated"] as? Int
         self.serialNumber = dict["Serial"] as? String
         self.voltage = dict["Voltage"] as? Int
+        self.instantAmperage = dict["InstantAmperage"] as? Int
         self.currentCapacity = dict["CurrentCapacity"] as? Int
         self.designCapacity = dict["DesignCapacity"] as? Int
         self.nominalChargeCapacity = dict["NominalChargeCapacity"] as? Int
@@ -50,6 +53,10 @@ extension BatteryRAWInfo {
         
         if let chargerDataDict = dict["ChargerData"] as? [String: Any] {
             self.chargerData = ChargerData(dict: chargerDataDict)
+        }
+        
+        if let adapterDataDict = dict["AdapterDetails"] as? [String: Any] {
+            self.adapterDetails = AdapterDetails(dict: adapterDataDict)
         }
     }
 }

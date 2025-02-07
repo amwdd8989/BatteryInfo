@@ -35,6 +35,24 @@ class SettingsUtils {
         
     }
     
+    func getAutoRefreshDataView() -> Bool {
+        return plistManager.getBool(key: "AutoRefreshDataView", defaultValue: true)
+    }
+    
+    func setAutoRefreshDataView(value: Bool) {
+        plistManager.setBool(key: "AutoRefreshDataView", value: value)
+        plistManager.apply()
+    }
+    
+    func getForceShowChargeingData() -> Bool {
+        return plistManager.getBool(key: "ForceShowChargeingData", defaultValue: false)
+    }
+    
+    func setForceShowChargeingData(value: Bool) {
+        plistManager.setBool(key: "ForceShowChargeingData", value: value)
+        plistManager.apply()
+    }
+    
     func getShowSettingsBatteryInfo() -> Bool {
         return plistManager.getBool(key: "ShowSettingsBatteryInfo", defaultValue: false)
     }

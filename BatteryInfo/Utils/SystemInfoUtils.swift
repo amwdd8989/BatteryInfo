@@ -61,6 +61,29 @@ func getDeviceUptimeUsingSysctl() -> String {
     )
 }
 
+// 设备是否正在充电，非Root设备也可以用
+func isDeviceCharging() -> Bool {
+    UIDevice.current.isBatteryMonitoringEnabled = true
+    return UIDevice.current.batteryState == .charging || UIDevice.current.batteryState == .full
+}
+
+/// 获取当前设备的充电状态
+func getBatteryState() -> UIDevice.BatteryState {
+    UIDevice.current.isBatteryMonitoringEnabled = true
+    return UIDevice.current.batteryState
+}
+
+// 获取电量百分比，非Root设备也可以用
+func getBatteryPercentage() -> Int? {
+    UIDevice.current.isBatteryMonitoringEnabled = true
+    let batteryLevel = UIDevice.current.batteryLevel
+    
+    if batteryLevel < 0 {
+        return nil // -1 表示无法获取电池电量
+    } else {
+        return Int(batteryLevel * 100) // 转换为百分比
+    }
+}
 
 func getDeviceName() -> String {
     switch getDeviceModel() {

@@ -77,6 +77,12 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
         return 2
     }
     
+    // MARK: - 设置每个分组的底部标题 可以为分组设置尾部文本，如果没有尾部可以返回 nil
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        
+        return NSLocalizedString("ManufacturerDataSourceMessage", comment: "") + "\n" + NSLocalizedString("BatteryDataSourceMessage", comment: "")
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
         cell.textLabel?.numberOfLines = 0 // 允许换行
@@ -99,4 +105,11 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
         return cell
     }
     
+    // MARK: - Cell的点击事件
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        
+    }
 }

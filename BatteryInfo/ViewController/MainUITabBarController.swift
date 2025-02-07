@@ -3,6 +3,10 @@ import UIKit
 
 class MainUITabBarController: UITabBarController {
     
+    private let homeViewController = HomeViewController()
+    private let historyRecordViewController = HistoryRecordViewController()
+    private let settingsViewController = SettingsViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -13,40 +17,49 @@ class MainUITabBarController: UITabBarController {
             view.backgroundColor = .white
         }
         
-        // 首页的ViewController
-        let homeViewController = HomeViewController()
+        homeViewController.tabBarItem = createTabBarItem(title: "Home", image: "house", selectedImage: "house.fill", fallbackImage: "")
+        historyRecordViewController.tabBarItem = createTabBarItem(title: "History", image: "list.dash", selectedImage: "list.bullet", fallbackImage: "")
+        settingsViewController.tabBarItem = createTabBarItem(title: "Settings", image: "gear", selectedImage: "gear.fill", fallbackImage: "")
+        
+        updateTabBarControllers(selfLoad: true)
+        
+        // 监听设置变化，动态更新 tab
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTabBarControllers), name: Notification.Name("ShowHistoryViewChanged"), object: nil)
+        
+    }
+    
+    private func createTabBarItem(title: String, image: String, selectedImage: String,fallbackImage: String) -> UITabBarItem {
+        let localizedTitle = NSLocalizedString(title, comment: "")
         if #available(iOS 13.0, *) {
-            homeViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("Home", comment: ""), image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
+            return UITabBarItem(title: localizedTitle, image: UIImage(systemName: image), selectedImage: UIImage(systemName: selectedImage))
         } else {
-            // Fallback on earlier versions
+            return UITabBarItem(title: localizedTitle, image: UIImage(named: fallbackImage), selectedImage: UIImage(named: fallbackImage))
         }
-        
-        // 历史记录的ViewController
-        let historyRecordViewController = HistoryRecordViewController()
-        if #available(iOS 13.0, *) {
-            historyRecordViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("History", comment: ""), image: UIImage(systemName: "list.dash"), selectedImage: UIImage(systemName: "list.bullet"))
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        
-        // 设置页面的ViewController
-        let settingsViewController = SettingsViewController()
-        if #available(iOS 13.0, *) {
-            settingsViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("Settings", comment: ""), image: UIImage(systemName: "gear"), selectedImage: UIImage(systemName: "gear.fill"))
-        } else {
-            // Fallback on earlier versions
-        }
-        
+    }
+    
+    @objc private func updateTabBarControllers(selfLoad: Bool) {
+        let homeNav = UINavigationController(rootViewController: homeViewController)
+        let settingsNav = UINavigationController(rootViewController: settingsViewController)
+
+        var newViewControllers: [UIViewController] = [homeNav]
+
         if SettingsUtils.instance.getShowHistoryRecordViewInHomeView() {
-            self.viewControllers = [UINavigationController(rootViewController: homeViewController),
-                                    UINavigationController(rootViewController: historyRecordViewController),
-                                    UINavigationController(rootViewController: settingsViewController)]
-        } else {
-            self.viewControllers = [UINavigationController(rootViewController: homeViewController),
-                                    UINavigationController(rootViewController: settingsViewController)]
+            let historyNav = UINavigationController(rootViewController: historyRecordViewController)
+            newViewControllers.append(historyNav)
         }
+
+        newViewControllers.append(settingsNav)
         
-          
+        // 更新 `viewControllers`
+        self.viewControllers = newViewControllers
+        
+        // 判断是否是其他ViewController通过通知的调用
+        if !selfLoad {
+            selectedIndex = newViewControllers.count == 2 ? 1 : 2
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
