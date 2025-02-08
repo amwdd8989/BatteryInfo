@@ -7,6 +7,7 @@ struct BatteryRAWInfo {
     var voltage: Int? // 当前电压
     var instantAmperage: Int?  // 当前电流
     var currentCapacity: Int? // 当前电量百分比
+    var appleRawCurrentCapacity: Int? // 当前电池剩余的毫安数
     var designCapacity: Int?  // 电池设计容量
     var nominalChargeCapacity: Int? // 电池当前的最大容量
     var isCharging: Bool?             // 是否充电
@@ -27,6 +28,7 @@ extension BatteryRAWInfo {
         self.voltage = dict["Voltage"] as? Int
         self.instantAmperage = dict["InstantAmperage"] as? Int
         self.currentCapacity = dict["CurrentCapacity"] as? Int
+        self.appleRawCurrentCapacity = dict["AppleRawCurrentCapacity"] as? Int
         self.designCapacity = dict["DesignCapacity"] as? Int
         self.nominalChargeCapacity = dict["NominalChargeCapacity"] as? Int
         self.isCharging = (dict["IsCharging"] as? Int) == 1

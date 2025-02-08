@@ -126,7 +126,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //                return 3
 //            }
             return 2
-        case 1: return 8 // 电池信息
+        case 1: return 9 // 电池信息
         case 2: // 充电信息
             if settingsUtils.getForceShowChargeingData() {
                 return 9
@@ -245,13 +245,19 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 } else { // 还是无法获取到电池百分比就只能返回未知了
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CurrentCapacity", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
-            } else if indexPath.row == 6 { // 电池当前电压
+            } else if indexPath.row == 6 { // 电池当前实时容量
+                if let appleRawCurrentCapacity = batteryInfo?.appleRawCurrentCapacity {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CurrentRAWCapacity", comment: ""), String(appleRawCurrentCapacity))
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CurrentRAWCapacity", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 7 { // 电池当前电压
                 if let voltage = batteryInfo?.voltage {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CurrentVoltage", comment: ""), String(format: "%.2f", Double(voltage) / 1000))
                 } else {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CurrentVoltage", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
-            } else if indexPath.row == 7 { // 电池当前电流
+            } else if indexPath.row == 8 { // 电池当前电流
                 if let instantAmperage = batteryInfo?.instantAmperage {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("InstantAmperage", comment: ""), String(instantAmperage))
                 } else {

@@ -402,6 +402,22 @@
         }
       }
     },
+    "CurrentRAWCapacity" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current Real-time Capacity: %@ mAh"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前实时容量: %@ mAh"
+          }
+        }
+      }
+    },
     "CurrentTemperature" : {
       "extractionState" : "manual",
       "localizations" : {
