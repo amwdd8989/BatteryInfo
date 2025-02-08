@@ -9,7 +9,7 @@ class DataRecordSettingsViewController: UIViewController, UITableViewDelegate, U
     
     private let tableTitleList = [nil, NSLocalizedString("RecordFrequencySettings", comment: "记录频率设置"), nil]
     
-    private let tableCellList = [[NSLocalizedString("Enable", comment: "启用"), NSLocalizedString("HistoryRecordViewInHomeView", comment: "在主界面显示历史记录界面")], [NSLocalizedString("Automatic", comment: ""), NSLocalizedString("EveryDay", comment: ""), NSLocalizedString("Manual", comment: "")], [NSLocalizedString("DeleteAllRecords", comment: "")]]
+    private let tableCellList = [[NSLocalizedString("Enable", comment: "启用"), NSLocalizedString("HistoryRecordViewInHomeView", comment: "在主界面显示历史记录界面")], [NSLocalizedString("Automatic", comment: ""), NSLocalizedString("DataChanged", comment: ""), NSLocalizedString("EveryDay", comment: ""), NSLocalizedString("Manual", comment: "")], [NSLocalizedString("DeleteAllRecords", comment: "")]]
     
     private var reloadMainTabBar = false
     

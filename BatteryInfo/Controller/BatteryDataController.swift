@@ -98,6 +98,17 @@ class BatteryDataController {
                     return databaseManager.insertRecord(BatteryDataRecord(cycleCount: cycleCount, nominalChargeCapacity: nominalChargeCapacity, designCapacity: designCapacity))
                 }
             }
+            
+        case .DataChanged:
+            if databaseManager.getRecordCount() == 0 { // 如果数据库还没数据就直接先创建一个
+                return databaseManager.insertRecord(BatteryDataRecord(cycleCount: cycleCount, nominalChargeCapacity: nominalChargeCapacity, designCapacity: designCapacity))
+            }
+            let lastRecord = databaseManager.getLatestRecord()
+            if lastRecord != nil {
+                if lastRecord?.cycleCount != cycleCount || lastRecord?.nominalChargeCapacity != nominalChargeCapacity {
+                    return databaseManager.insertRecord(BatteryDataRecord(cycleCount: cycleCount, nominalChargeCapacity: nominalChargeCapacity, designCapacity: designCapacity))
+                }
+            }
         case .EveryDay:
             if databaseManager.getRecordCount() == 0 { // 如果数据库还没数据就直接先创建一个
                 return databaseManager.insertRecord(BatteryDataRecord(cycleCount: cycleCount, nominalChargeCapacity: nominalChargeCapacity, designCapacity: designCapacity))

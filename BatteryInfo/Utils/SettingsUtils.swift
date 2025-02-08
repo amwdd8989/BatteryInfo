@@ -16,10 +16,11 @@ class SettingsUtils {
     }
     
     enum RecordFrequency: Int {
-        case Toogle = 0     // 禁用的时候下面的值变成负数,启用的时候是正数
-        case Automatic = 1  // 自动()
-        case EveryDay = 2
-        case Manual = 3
+        case Toogle = 0       // 禁用的时候下面的值变成负数,启用的时候是正数
+        case Automatic = 1    // 自动，每天或者电池剩余容量发生变化或者电池循环次数变化时保存
+        case DataChanged = 2  // 数据发生改变时记录，电池剩余容量发生变化或者电池循环次数变化时保存
+        case EveryDay = 3     // 每天打开App的时候记录
+        case Manual = 4       // 手动
     }
     
     private init() {
@@ -52,6 +53,15 @@ class SettingsUtils {
         plistManager.setBool(key: "ForceShowChargeingData", value: value)
         plistManager.apply()
     }
+    
+//    func getShowCPUFrequency() -> Bool {
+//        return plistManager.getBool(key: "ShowCPUFrequency", defaultValue: false)
+//    }
+//    
+//    func setShowCPUFrequency(value: Bool) {
+//        plistManager.setBool(key: "ShowCPUFrequency", value: value)
+//        plistManager.apply()
+//    }
     
     func getShowSettingsBatteryInfo() -> Bool {
         return plistManager.getBool(key: "ShowSettingsBatteryInfo", defaultValue: false)

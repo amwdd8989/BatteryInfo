@@ -11,6 +11,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private var settingsBatteryInfo: BatteryDataController.SettingsBatteryData?
     
     private var refreshTimer: Timer?
+    private var showOSBuildVersion = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,7 +121,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
-        case 0: return 2 // 系统信息
+        case 0: // 系统信息
+//            if settingsUtils.getShowCPUFrequency() {
+//                return 3
+//            }
+            return 2
         case 1: return 8 // 电池信息
         case 2: // 充电信息
             if settingsUtils.getForceShowChargeingData() {
@@ -182,14 +187,24 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 } else {
                     cell.textLabel?.text = getDeviceName() + " (" + String.localizedStringWithFormat(NSLocalizedString("iPadOSVersion", comment: ""), UIDevice.current.systemVersion) + ")"
                 }
+                
+                let buildVersion: String = " [" + (getSystemBuildVersion() ?? "") + "]"
+                if self.showOSBuildVersion {
+                    cell.textLabel?.text = (cell.textLabel?.text)! + buildVersion
+                }
+                   
             } else if indexPath.row == 1 { // 设备启动时间
 //                cell.textLabel?.text = getDeviceUptime()
                 cell.textLabel?.text = getDeviceUptimeUsingSysctl()
-            } else {
-                let dc = DeviceController()
-                dc.copyBatteryHealthData(toDirectory: FileManager.default.temporaryDirectory.absoluteString)
-                cell.textLabel?.text = dc.getBatteryHealthData()
             }
+//            else {
+//                let cpuFrequency = getCPUFrequencyInfo()
+//                if let current = cpuFrequency.current, let min = cpuFrequency.min, let max = cpuFrequency.max {
+//                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CPUFrequency", comment: ""), current, min, max)
+//                } else {
+//                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CPUFrequency", comment: ""), NSLocalizedString("Unknown", comment: ""), NSLocalizedString("Unknown", comment: ""), NSLocalizedString("Unknown", comment: ""))
+//                }
+//            }
             
         } else if indexPath.section == 1 { // 电池信息
             if indexPath.row == 0 { // 电池健康度
@@ -378,6 +393,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.deselectRow(at: indexPath, animated: true)
 //        self.navigationController!.pushViewController(RawDataViewController(), animated: true)
 //        self.present(RawDataViewController(), animated: true, completion: nil)
+        if indexPath.section == 0 && indexPath.row == 0 {
+            self.showOSBuildVersion = !showOSBuildVersion
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }
         if indexPath.section == 3 {
             if indexPath.row == 0 { // 显示全部数据
                 let allBatteryDataViewController = AllBatteryDataViewController()

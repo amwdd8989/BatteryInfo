@@ -65,6 +65,22 @@
         }
       }
     },
+    "AutoRefreshDataFooterMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app will not refresh and record data when it is in the background, and it will not consume battery power in the background."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App不会在后台时刷新和记录数据，并且不会在后台消耗电池电量"
+          }
+        }
+      }
+    },
     "AutoRefreshDataViewSetting" : {
       "localizations" : {
         "en" : {
@@ -353,13 +369,29 @@
         }
       }
     },
+    "CPUFrequency" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CPU Frequency: %@ MHz (%@ / %@ MHz)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CPU频率: %@ MHz (%@ / %@ MHz)"
+          }
+        }
+      }
+    },
     "CurrentCapacity" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Current Capacity: %@%"
+            "value" : "Current Capacity: %@%%"
           }
         },
         "zh-Hans" : {
@@ -432,6 +464,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "循环次数: %@次"
+          }
+        }
+      }
+    },
+    "DataChanged" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When Data Changed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据变化时"
           }
         }
       }
@@ -1084,6 +1132,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设置中的电池健康数据"
+          }
+        }
+      }
+    },
+    "ShowCPUFrequency" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show CPU Frequency in Home"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在首页显示CPU频率"
           }
         }
       }

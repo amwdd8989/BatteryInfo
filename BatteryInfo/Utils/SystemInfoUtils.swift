@@ -24,6 +24,16 @@ func isRunningOniPadOS() -> Bool {
     return false
 }
 
+func getSystemBuildVersion() -> String? {
+    var size = 0
+    sysctlbyname("kern.osversion", nil, &size, nil, 0)
+    
+    var build = [CChar](repeating: 0, count: size)
+    sysctlbyname("kern.osversion", &build, &size, nil, 0)
+    
+    return String(cString: build)
+}
+
 func getDeviceUptime() -> String {
     let uptimeInSeconds = Int(ProcessInfo.processInfo.systemUptime)
     

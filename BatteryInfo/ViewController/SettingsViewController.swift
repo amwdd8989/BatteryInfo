@@ -3,7 +3,7 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let versionCode = "1.0"
+    let versionCode = "1.0.1"
     
     private var tableView = UITableView()
     
@@ -13,6 +13,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private let tableCellList = [[NSLocalizedString("AutoRefreshDataViewSetting", comment: ""), NSLocalizedString("ForceShowChargeingData", comment: ""), NSLocalizedString("DataRecordSettings", comment: "")], [NSLocalizedString("KeepOriginal", comment: ""), NSLocalizedString("Ceiling", comment: ""), NSLocalizedString("Round", comment: ""), NSLocalizedString("Floor", comment: "")], [NSLocalizedString("Version", comment: ""), "GitHub"]]
     // NSLocalizedString("ShowSettingsBatteryInfo", comment: "")
+    // NSLocalizedString("ShowCPUFrequency", comment: "")
     
     // 标记一下每个分组的编号，防止新增一组还需要修改好几处的代码
     private let maximumCapacityAccuracyAtSection = 1
@@ -66,6 +67,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return tableTitleList[section]
     }
     
+    // MARK: - 设置每个分组的底部标题 可以为分组设置尾部文本，如果没有尾部可以返回 nil
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        
+        if section == 0 {
+            return NSLocalizedString("AutoRefreshDataFooterMessage", comment: "")
+        }
+        return nil
+    }
+    
     // MARK: - 构造每个Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
@@ -82,9 +92,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 //                switchView.isOn = SettingsUtils.instance.getShowSettingsBatteryInfo()
                 if indexPath.row == 0 {
                     switchView.isOn = SettingsUtils.instance.getAutoRefreshDataView()
-                } else {
+                } else if indexPath.row == 1 {
                     switchView.isOn = SettingsUtils.instance.getForceShowChargeingData()
                 }
+//                else {
+//                    switchView.isOn = SettingsUtils.instance.getShowCPUFrequency()
+//                }
                 switchView.addTarget(self, action: #selector(self.onSwitchChanged(_:)), for: .valueChanged)
                 cell.accessoryView = switchView
                 cell.selectionStyle = .none
@@ -152,6 +165,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         } else if sender.tag == 1 {
             SettingsUtils.instance.setForceShowChargeingData(value: sender.isOn)
         }
+//        else if sender.tag == 2 {
+//            SettingsUtils.instance.setShowCPUFrequency(value: sender.isOn)
+//        }
     }
     
 }
