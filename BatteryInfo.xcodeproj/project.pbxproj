@@ -359,7 +359,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = X2WABLB38D;
 				FRAMEWORK_SEARCH_PATHS = (
 					/System/Library/Frameworks,
@@ -382,7 +382,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BatteryInfo",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_CFLAGS = "-Wno-error=unguarded-availability-new";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.developlab.BatteryInfo;
@@ -408,7 +408,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = X2WABLB38D;
 				FRAMEWORK_SEARCH_PATHS = (
 					/System/Library/Frameworks,
@@ -431,7 +431,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BatteryInfo",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_CFLAGS = "-Wno-error=unguarded-availability-new";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.developlab.BatteryInfo;

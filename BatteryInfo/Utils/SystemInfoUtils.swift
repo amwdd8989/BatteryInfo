@@ -95,6 +95,29 @@ func getBatteryPercentage() -> Int? {
     }
 }
 
+// 获取设备总容量
+func getTotalDiskSpace() -> Int64 {
+    if let attributes = try? FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory()),
+       let totalSize = attributes[.systemSize] as? Int64 {
+        return totalSize
+    }
+    return 0
+}
+
+// 获取设备总容量的近似
+func getDiskTotalSpace() -> String {
+    let totalSize = getTotalDiskSpace()
+    let sizeInGB = Double(totalSize) / 1_000_000_000 // 转换为GB（基于10^9）
+
+    // iOS 设备常见存储规格（按官方设备容量）
+    let storageSizes: [Double] = [16, 32, 64, 128, 256, 512, 1024, 2048] // 单位 GB
+
+    // 找到最接近的存储规格
+    let closestSize = storageSizes.min(by: { abs($0 - sizeInGB) < abs($1 - sizeInGB) }) ?? sizeInGB
+
+    return closestSize >= 1024 ? "\(Int(closestSize / 1024)) TB" : "\(Int(closestSize)) GB"
+}
+
 func getDeviceName() -> String {
     switch getDeviceModel() {
         

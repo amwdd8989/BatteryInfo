@@ -9,6 +9,7 @@ struct BatteryData {
     var minimumFCC: Int?
     var temperatureSamples: Int?
     var stateOfCharge: Int?
+    var lifetimeData: LifetimeData?   // 嵌套 LifetimeData
 }
 
 extension BatteryData {
@@ -21,5 +22,9 @@ extension BatteryData {
         self.minimumFCC = dict["MinimumFCC"] as? Int
         self.temperatureSamples = dict["TemperatureSamples"] as? Int
         self.stateOfCharge = dict["StateOfCharge"] as? Int
+        
+        if let lifetimeDataDict = dict["LifetimeData"] as? [String: Any] {
+            self.lifetimeData = LifetimeData(dict: lifetimeDataDict)
+        }
     }
 }

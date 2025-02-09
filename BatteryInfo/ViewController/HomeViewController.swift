@@ -183,9 +183,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if indexPath.section == 0 {
             if indexPath.row == 0 { // 系统版本号
                 if !isRunningOniPadOS() {
-                    cell.textLabel?.text = getDeviceName() + " (" + String.localizedStringWithFormat(NSLocalizedString("iOSVersion", comment: ""), UIDevice.current.systemVersion) + ")"
+                    cell.textLabel?.text = getDeviceName() + " " + getDiskTotalSpace() + " (" + String.localizedStringWithFormat(NSLocalizedString("iOSVersion", comment: ""), UIDevice.current.systemVersion) + ")"
                 } else {
-                    cell.textLabel?.text = getDeviceName() + " (" + String.localizedStringWithFormat(NSLocalizedString("iPadOSVersion", comment: ""), UIDevice.current.systemVersion) + ")"
+                    cell.textLabel?.text = getDeviceName() + " " + getDiskTotalSpace() + " (" + String.localizedStringWithFormat(NSLocalizedString("iPadOSVersion", comment: ""), UIDevice.current.systemVersion) + ")"
                 }
                 
                 let buildVersion: String = " [" + (getSystemBuildVersion() ?? "") + "]"

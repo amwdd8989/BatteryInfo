@@ -14,7 +14,6 @@ struct BatteryRAWInfo {
     var cycleCount: Int?              // 循环次数
     var temperature: Int?             // 电池温度
     var batteryData: BatteryData?     // 嵌套 BatteryData
-    var lifetimeData: LifetimeData?   // 嵌套 LifetimeData
     var kioskMode: KioskMode?         // 嵌套 KioskMode
     var adapterDetails: AdapterDetails? // 充电器信息
     var chargerData: ChargerData?     // 嵌套 ChargerData
@@ -43,10 +42,6 @@ extension BatteryRAWInfo {
         
         if let batteryDataDict = dict["BatteryData"] as? [String: Any] {
             self.batteryData = BatteryData(dict: batteryDataDict)
-        }
-        
-        if let lifetimeDataDict = dict["LifetimeData"] as? [String: Any] {
-            self.lifetimeData = LifetimeData(dict: lifetimeDataDict)
         }
         
         if let kioskModeDict = dict["KioskMode"] as? [String: Any] {

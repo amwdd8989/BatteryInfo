@@ -5,6 +5,7 @@ include $(THEOS)/makefiles/common.mk
 
 # 使用 Xcode 项目构建
 XCODEPROJ_NAME = BatteryInfo
+BUILD_VERSION = "1.0.3"
 
 # 指定 Theos 使用 xcodeproj 规则
 include $(THEOS_MAKE_PATH)/xcodeproj.mk
@@ -23,5 +24,5 @@ before-package::
 # 打包后重命名为 .tipa
 after-package::
 	@echo -e "\033[32mRenaming .ipa to .tipa...\033[0m"
-	@mv ./packages/com.developlab.batteryinfo_1.0.2.ipa ./packages/com.developlab.batteryinfo_1.0.2.tipa || @echo -e "\033[31mNo .ipa file found.\033[0m"
+	@mv ./packages/com.developlab.batteryinfo_$(BUILD_VERSION).ipa ./packages/com.developlab.batteryinfo_$(BUILD_VERSION).tipa || @echo -e "\033[31mNo .ipa file found.\033[0m"
 	@echo -e "\033[1;32m\n** Build Succeeded **\n\033[0m"

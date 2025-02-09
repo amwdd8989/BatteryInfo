@@ -69,18 +69,27 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - 设置总分组数量
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     // MARK: - 列表总长度
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        switch section {
+        case 0: return 2
+        case 1: return 2
+        default: return 0
+        }
     }
     
     // MARK: - 设置每个分组的底部标题 可以为分组设置尾部文本，如果没有尾部可以返回 nil
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         
-        return NSLocalizedString("ManufacturerDataSourceMessage", comment: "") + "\n" + NSLocalizedString("BatteryDataSourceMessage", comment: "")
+        if section == 0 {
+            return NSLocalizedString("ManufacturerDataSourceMessage", comment: "")
+        } else if section == 1 {
+            return NSLocalizedString("BatteryDataSourceMessage", comment: "")
+        }
+        return nil
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -99,6 +108,20 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("BatteryManufacturer", comment: ""), BatteryDataController.getBatteryManufacturer(from: serialNumber))
                 } else {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("BatteryManufacturer", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            }
+        } else if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                if let maximumQmax = batteryInfo?.batteryData?.lifetimeData?.maximumQmax {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumQmax", comment: ""), String(maximumQmax))
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumQmax", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 1 {
+                if let minimumQmax = batteryInfo?.batteryData?.lifetimeData?.minimumQmax {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MinimumQmax", comment: ""), String(minimumQmax))
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MinimumQmax", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
             }
         }

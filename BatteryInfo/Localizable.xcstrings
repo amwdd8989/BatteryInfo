@@ -909,6 +909,38 @@
         }
       }
     },
+    "MaximumQmax" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum Qmax: %@ mAh"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最大Qmax: %@ mAh"
+          }
+        }
+      }
+    },
+    "MinimumQmax" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum Qmax: %@ mAh"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最小Qmax: %@ mAh"
+          }
+        }
+      }
+    },
     "NeedRunTimePremissionMessage" : {
       "localizations" : {
         "en" : {
