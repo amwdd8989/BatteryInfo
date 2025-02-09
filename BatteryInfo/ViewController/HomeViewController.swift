@@ -52,11 +52,21 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         ])
         
         if !BatteryDataController.checkRunTimePermission() {
-            let alert = UIAlertController(title: NSLocalizedString("Alert", comment: ""), message: NSLocalizedString("NeedRunTimePremissionMessage", comment: ""), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Dismiss", comment: ""), style: .cancel))
-            present(alert, animated: true)
             
-            return
+            if !BatteryDataController.checkInstallPermission() {
+                let alert = UIAlertController(title: NSLocalizedString("Alert", comment: ""), message: NSLocalizedString("NeedRunTimePremissionMessage", comment: ""), preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Dismiss", comment: ""), style: .cancel))
+                present(alert, animated: true)
+                
+                return
+            } else {
+                let alert = UIAlertController(title: NSLocalizedString("Alert", comment: ""), message: NSLocalizedString("TemporaryNotSupportMessage", comment: ""), preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Dismiss", comment: ""), style: .cancel))
+                present(alert, animated: true)
+                
+                return
+            }
+            
         }
     }
     

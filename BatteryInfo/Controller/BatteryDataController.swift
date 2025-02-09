@@ -19,6 +19,13 @@ class BatteryDataController {
         // 记录历史数据
         return batteryInfo.cycleCount != nil
     }
+    
+    // 检查Unsandbox权限的方法
+    static func checkInstallPermission() -> Bool {
+        let path = "/var/mobile/Library/Preferences"
+        let writeable = access(path, W_OK) == 0
+        return writeable
+    }
 
     static func getSettingsBatteryInfoData() -> SettingsBatteryData? {
         guard let plistData = NSDictionary(contentsOfFile: "/var/MobileSoftwareUpdate/Hardware/Battery/Library/Preferences/com.apple.batteryhealthdata.plist") as? [String: Any] else {
@@ -144,6 +151,18 @@ class BatteryDataController {
         formatter.locale = Locale.autoupdatingCurrent // 自动适配用户的地区和语言
         
         return formatter.string(from: date)
+    }
+    
+    /// 给序列号打上*号*
+    static func maskSerialNumber(_ serial: String) -> String {
+        guard serial.count >= 5 else {
+            return serial // 如果长度小于 5，则直接返回
+        }
+        
+        let prefix = serial.prefix(5) // 获取前 5 位
+        let maskedPart = String(repeating: "*", count: serial.count - 5) // 剩余部分用 * 替代
+        
+        return prefix + maskedPart
     }
 
     

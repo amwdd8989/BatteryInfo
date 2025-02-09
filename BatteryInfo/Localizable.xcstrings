@@ -849,13 +849,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Battery manufacturer information comes from the Internet and is calculated through serial number information. If there are any errors, please submit them for correction and improvement."
+            "value" : "Click the serial number to hide the display. Battery manufacturer information comes from the Internet and is calculated through serial number information. If there are any errors, please submit them for correction and improvement."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "电池制造商信息来源于网络，通过序列号信息进行推算，如有错误请提出以进行更正和改进"
+            "value" : "点击序列号可以隐藏显示，电池制造商信息来源于网络，通过序列号信息进行推算，如有错误请提出以进行更正和改进"
           }
         }
       }
@@ -1212,6 +1212,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "显示在系统设置中的电池健康数据"
+          }
+        }
+      }
+    },
+    "TemporaryNotSupportMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oops, although you have installed the App using TrollStore, but the data has not been obtained, and the data interface does not support your device for the time being. We will try to provide an alternative in subsequent versions. It may take some time to wait patiently, and I'm very sorry, you can use other alternatives."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "糟糕，虽然您已经使用TrollStore安装了App，但是没有获取到数据，数据接口暂时不支持您的设备，我们会尝试在后续版本中提供替代方案。可能需要耐心等待一段时间，非常抱歉，您可以使用其他替代方案。"
           }
         }
       }

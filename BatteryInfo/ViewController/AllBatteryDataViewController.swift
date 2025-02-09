@@ -7,6 +7,8 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
     
     private var batteryInfo: BatteryRAWInfo?
     
+    private var isMaskSerialNumber = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -99,7 +101,11 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 if let serialNumber = batteryInfo?.serialNumber {
-                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("SerialNumber", comment: ""), serialNumber)
+                    if isMaskSerialNumber {
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("SerialNumber", comment: ""), BatteryDataController.maskSerialNumber(serialNumber))
+                    } else {
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("SerialNumber", comment: ""), serialNumber)
+                    }
                 } else {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("SerialNumber", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
@@ -133,6 +139,10 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
         
         tableView.deselectRow(at: indexPath, animated: true)
         
+        if indexPath.section == 0 && indexPath.row == 0 {
+            self.isMaskSerialNumber = !isMaskSerialNumber
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }
         
     }
 }
