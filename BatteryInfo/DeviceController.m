@@ -2,7 +2,6 @@
 #include <spawn.h>
 #import <sys/sysctl.h>
 #import <Foundation/Foundation.h>
-//#import <FrontBoardServices/FBSSystemService.h>
 
 @implementation DeviceController
 
@@ -11,75 +10,7 @@ extern int posix_spawnattr_set_persona_np(const posix_spawnattr_t* __restrict, u
 extern int posix_spawnattr_set_persona_uid_np(const posix_spawnattr_t* __restrict, uid_t);
 extern int posix_spawnattr_set_persona_gid_np(const posix_spawnattr_t* __restrict, uid_t);
 
-//- (BOOL) RebootDevice
-//{
-//	NSString *path = [[NSBundle mainBundle] pathForResource:@"RebootRootHelper" ofType:@""];
-//
-//	NSArray *args = @[]; // 不需要任何额外参数
-//    NSString *stdOut = nil;
-//    NSString *stdErr = nil;
-//
-//	if (path == nil) {
-//		return NO;
-//	}
-//
-//	int result = spawnRoot(path, args, &stdOut, &stdErr);
-//	if (result == 0) {
-//		return YES;
-//	}
-//
-//	return NO;
-//}
 
-- (NSString *) getBatteryHealthData {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"SettingsBatteryHelper" ofType:@""];
-
-    NSArray *args = @[]; // 无参数
-    NSString *stdOut = nil;
-    NSString *stdErr = nil;
-
-    if (path == nil) {
-        return @"❌ 无法找到 Helper 文件";
-    }
-
-    int result = spawnRoot(path, args, &stdOut, &stdErr);
-    
-    if (result == 0) {
-        // **返回 Plist 文件内容**
-//        return stdOut.length > 0 ? stdOut : @"❌ Helper 运行成功，但没有返回数据";
-        return stdOut.length > 0 ? stdOut : path;
-    } else {
-        // **返回错误信息**
-        return stdErr.length > 0 ? [NSString stringWithFormat:@"❌ Helper 运行失败: %@", stdErr] : @"❌ Helper 运行失败，未知错误";
-    }
-}
-
-- (void)copyBatteryHealthDataToDirectory:(NSString *)destDir {
-    // 获取 Root Helper 路径
-    NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"BatteryHealthCopyHelper" ofType:nil];
-    if (!helperPath) {
-        NSLog(@"ERROR: BatteryHealthCopyHelper not found in app bundle.");
-        return;
-    }
-
-    // 调用 Root Helper 并传递目标目录路径
-    NSArray *args = @[helperPath, destDir];
-    NSString *stdOut = nil;
-    NSString *stdErr = nil;
-    int status = spawnRoot(helperPath, args, &stdOut, &stdErr);
-    if (status != 0) {
-        NSLog(@"ERROR: Failed to spawn BatteryHealthCopyHelper with status %d", status);
-        return;
-    }
-
-    // 输出结果
-    if (stdOut) {
-        NSLog(@"Root Helper output: %@", stdOut);
-    }
-    if (stdErr) {
-        NSLog(@"Root Helper error: %@", stdErr);
-    }
-}
 
 // @See https://github.com/opa334/TrollStore/blob/main/Shared/TSUtil.m#L297
 - (void) Respring

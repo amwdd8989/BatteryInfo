@@ -124,7 +124,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: - 设置总分组数量
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     // MARK: - 列表总长度
@@ -147,13 +147,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     return 1
                 }
             }
-//        case 3: // 设置中的电池健康信息
-//            if settingsUtils.getShowSettingsBatteryInfo() {
-//                return 2
-//            } else {
-//                return 0
-//            }
-        case 3: return 2
+        case 3: // 设置中的电池健康信息
+            if settingsUtils.getShowSettingsBatteryInfo() {
+                return 2
+            } else {
+                return 0
+            }
+        case 4: return 2
         default: return 0
         }
     }
@@ -178,6 +178,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if section == 2 {
             if isDeviceCharging() {
                 return NSLocalizedString("ChargeInfoFooterMessage", comment: "")
+            }
+        } else if section == 3 {
+            if settingsUtils.getShowSettingsBatteryInfo() {
+                return NSLocalizedString("SettingsBatteryInfoFooterMessage", comment: "")
             }
         } else if section == 4 {
             return NSLocalizedString("BatteryDataSourceMessage", comment: "")
@@ -376,22 +380,22 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
-//        else if indexPath.section == 3 { // 设置中的电池数据
-//            if indexPath.row == 0 { // 电池健康度
-//                if let maximumCapacity = settingsBatteryInfo?.maximumCapacityPercent {
-//                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), String(maximumCapacity))
-//                } else {
-//                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), NSLocalizedString("Unknown", comment: ""))
-//                }
-//            } else if indexPath.row == 1 { // 电池循环次数
-//                if let cycleCount = settingsBatteryInfo?.cycleCount {
-//                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), String(cycleCount))
-//                } else {
-//                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), NSLocalizedString("Unknown", comment: ""))
-//                }
-//            }
-//        }
-        else if indexPath.section == 3 {
+        else if indexPath.section == 3 { // 设置中的电池数据
+            if indexPath.row == 0 { // 电池健康度
+                if let maximumCapacity = settingsBatteryInfo?.maximumCapacityPercent {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), String(maximumCapacity))
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 1 { // 电池循环次数
+                if let cycleCount = settingsBatteryInfo?.cycleCount {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), String(cycleCount))
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            }
+        }
+        else if indexPath.section == 4 {
             
             cell.accessoryType = .disclosureIndicator
             if indexPath.row == 0 { // 显示全部数据
@@ -413,7 +417,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.showOSBuildVersion = !showOSBuildVersion
             tableView.reloadRows(at: [indexPath], with: .none)
         }
-        if indexPath.section == 3 {
+        if indexPath.section == 4 {
             if indexPath.row == 0 { // 显示全部数据
                 let allBatteryDataViewController = AllBatteryDataViewController()
                 allBatteryDataViewController.hidesBottomBarWhenPushed = true // 隐藏底部导航栏

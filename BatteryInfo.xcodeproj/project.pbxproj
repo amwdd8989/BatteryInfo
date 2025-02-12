@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1731F9BB2D50D02600AA1FD5 /* DeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1731F9BA2D50D02600AA1FD5 /* DeviceController.m */; };
-		1731F9D02D519E0400AA1FD5 /* SettingsBatteryHelper in Resources */ = {isa = PBXBuildFile; fileRef = 1731F9CF2D519E0400AA1FD5 /* SettingsBatteryHelper */; };
 		179E78992D1D5E49009C29C9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179E78982D1D5E49009C29C9 /* UIKit.framework */; };
 		179E789B2D1D5E4F009C29C9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179E789A2D1D5E4F009C29C9 /* CoreGraphics.framework */; };
 		179E789D2D1D5E55009C29C9 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179E789C2D1D5E55009C29C9 /* IOKit.framework */; };
@@ -26,7 +25,6 @@
 /* Begin PBXFileReference section */
 		1731F9B92D50D02600AA1FD5 /* DeviceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceController.h; sourceTree = "<group>"; };
 		1731F9BA2D50D02600AA1FD5 /* DeviceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceController.m; sourceTree = "<group>"; };
-		1731F9CF2D519E0400AA1FD5 /* SettingsBatteryHelper */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = SettingsBatteryHelper; sourceTree = "<group>"; };
 		179E78902D1D52A0009C29C9 /* BatteryInfo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BatteryInfo-Bridging-Header.h"; sourceTree = "<group>"; };
 		179E78912D1D52A0009C29C9 /* BatteryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatteryHelper.h; sourceTree = "<group>"; };
 		179E78982D1D5E49009C29C9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -97,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				17BC10FD2D51F6E4009924BF /* Utils */,
-				1731F9CF2D519E0400AA1FD5 /* SettingsBatteryHelper */,
 				1731F9B92D50D02600AA1FD5 /* DeviceController.h */,
 				1731F9BA2D50D02600AA1FD5 /* DeviceController.m */,
 				17B0EDBF2D49C07B00F77781 /* Localizable.xcstrings */,
@@ -192,7 +189,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				17D996DF2D1D50A60056394C /* LaunchScreen.storyboard in Resources */,
-				1731F9D02D519E0400AA1FD5 /* SettingsBatteryHelper in Resources */,
 				17B0EDC02D49C07B00F77781 /* Localizable.xcstrings in Resources */,
 				17BC113C2D521A79009924BF /* BatteryManufacturer.xcstrings in Resources */,
 				17B0EDC22D49C0A600F77781 /* InfoPlist.xcstrings in Resources */,
@@ -359,7 +355,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = X2WABLB38D;
 				FRAMEWORK_SEARCH_PATHS = (
 					/System/Library/Frameworks,
@@ -382,7 +378,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BatteryInfo",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.1;
 				OTHER_CFLAGS = "-Wno-error=unguarded-availability-new";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.developlab.BatteryInfo;
@@ -408,7 +404,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = X2WABLB38D;
 				FRAMEWORK_SEARCH_PATHS = (
 					/System/Library/Frameworks,
@@ -431,7 +427,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BatteryInfo",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.1;
 				OTHER_CFLAGS = "-Wno-error=unguarded-availability-new";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.developlab.BatteryInfo;

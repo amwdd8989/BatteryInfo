@@ -3,9 +3,15 @@ import Foundation
 class BatteryDataController {
     
     /// 设置中的电池健康数据
-    struct SettingsBatteryData {
+    struct SettingsBatteryData: Codable {
         var cycleCount: Int?
         var maximumCapacityPercent: Int?
+
+        // 自定义 key 对应 JSON 字段
+        enum CodingKeys: String, CodingKey {
+            case cycleCount = "CycleCount"
+            case maximumCapacityPercent = "Maximum Capacity Percent"
+        }
     }
     
     // 检查Root权限的方法
@@ -28,14 +34,30 @@ class BatteryDataController {
     }
 
     static func getSettingsBatteryInfoData() -> SettingsBatteryData? {
-        guard let plistData = NSDictionary(contentsOfFile: "/var/MobileSoftwareUpdate/Hardware/Battery/Library/Preferences/com.apple.batteryhealthdata.plist") as? [String: Any] else {
-            return nil
+
+        // 获取当前包内 `SettingsBatteryHelper` 可执行文件的路径
+        let executablePath = Bundle.main.url(forAuxiliaryExecutable: "SettingsBatteryHelper")?.path ?? "/"
+        
+        var stdOut: NSString?
+        // 调用 `spawnRoot`
+        spawnRoot(executablePath, nil, &stdOut, nil)
+        
+        if let stdOutString = stdOut as String?, let plistData = stdOutString.data(using: .utf8) {
+            do {
+                // 使用 Codable 解析 JSON
+                let batteryData = try JSONDecoder().decode(SettingsBatteryData.self, from: plistData)
+                
+                return batteryData
+                
+            } catch {
+                    print("BatteryInfo------> Error converting string to plist: \(error.localizedDescription)")
+            }
+        
+        } else {
+            NSLog("BatteryInfo------> RootHelper工作失败")
         }
+        return nil
         
-        let cycleCount = plistData["CycleCount"] as? Int
-        let maxCapacity = plistData["Maximum Capacity Percent"] as? Int
-        
-        return SettingsBatteryData(cycleCount: cycleCount, maximumCapacityPercent: maxCapacity)
     }
     
     /// 解析电池序列号，返回供应商名称

@@ -3,7 +3,7 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let versionCode = "1.0.4"
+    let versionCode = "1.1"
     
     private var tableView = UITableView()
     
@@ -11,8 +11,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private let tableTitleList = [nil, NSLocalizedString("MaximumCapacityAccuracy", comment: ""), NSLocalizedString("About", comment: "")]
     
-    private let tableCellList = [[NSLocalizedString("AutoRefreshDataViewSetting", comment: ""), NSLocalizedString("ForceShowChargeingData", comment: ""), NSLocalizedString("DataRecordSettings", comment: "")], [NSLocalizedString("KeepOriginal", comment: ""), NSLocalizedString("Ceiling", comment: ""), NSLocalizedString("Round", comment: ""), NSLocalizedString("Floor", comment: "")], [NSLocalizedString("Version", comment: ""), "GitHub"]]
-    // NSLocalizedString("ShowSettingsBatteryInfo", comment: "")
+    private let tableCellList = [[NSLocalizedString("AutoRefreshDataViewSetting", comment: ""), NSLocalizedString("ForceShowChargeingData", comment: ""), NSLocalizedString("ShowSettingsBatteryInfo", comment: ""), NSLocalizedString("DataRecordSettings", comment: "")], [NSLocalizedString("KeepOriginal", comment: ""), NSLocalizedString("Ceiling", comment: ""), NSLocalizedString("Round", comment: ""), NSLocalizedString("Floor", comment: "")], [NSLocalizedString("Version", comment: ""), "GitHub", NSLocalizedString("ThanksForXiaoboVlog", comment: "")]]
     // NSLocalizedString("ShowCPUFrequency", comment: "")
     
     // 标记一下每个分组的编号，防止新增一组还需要修改好几处的代码
@@ -86,7 +85,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.textLabel?.numberOfLines = 0 // 允许换行
         
         if indexPath.section == 0 {
-            if indexPath.row == 0 || indexPath.row == 1 {
+            if indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2 {
                 let switchView = UISwitch(frame: .zero)
                 switchView.tag = indexPath.row // 设置识别id
 //                switchView.isOn = SettingsUtils.instance.getShowSettingsBatteryInfo()
@@ -94,6 +93,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     switchView.isOn = SettingsUtils.instance.getAutoRefreshDataView()
                 } else if indexPath.row == 1 {
                     switchView.isOn = SettingsUtils.instance.getForceShowChargeingData()
+                } else if indexPath.row == 2 {
+                    switchView.isOn = SettingsUtils.instance.getShowSettingsBatteryInfo()
                 }
 //                else {
 //                    switchView.isOn = SettingsUtils.instance.getShowCPUFrequency()
@@ -101,7 +102,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 switchView.addTarget(self, action: #selector(self.onSwitchChanged(_:)), for: .valueChanged)
                 cell.accessoryView = switchView
                 cell.selectionStyle = .none
-            } else if indexPath.row == 2 {
+            } else if indexPath.row == 3 {
                 cell.accessoryType = .disclosureIndicator
                 cell.selectionStyle = .default // 启用选中效果
             }
@@ -138,7 +139,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
-            if indexPath.row == 2 {
+            if indexPath.row == 3 {
                 let dataRecordSettingsViewController = DataRecordSettingsViewController()
                 dataRecordSettingsViewController.hidesBottomBarWhenPushed = true // 隐藏底部导航栏
                 self.navigationController?.pushViewController(dataRecordSettingsViewController, animated: true)
@@ -155,6 +156,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 if let url = URL(string: "https://github.com/DevelopCubeLab/BatteryInfo") {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
+            } else if indexPath.row == 2 {
+                if let url = URL(string: "https://m.xiaobovlog.cn/") {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
             }
         }
     }
@@ -164,6 +169,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             SettingsUtils.instance.setAutoRefreshDataView(value: sender.isOn)
         } else if sender.tag == 1 {
             SettingsUtils.instance.setForceShowChargeingData(value: sender.isOn)
+        } else if sender.tag == 2 {
+            SettingsUtils.instance.setShowSettingsBatteryInfo(value: sender.isOn)
         }
 //        else if sender.tag == 2 {
 //            SettingsUtils.instance.setShowCPUFrequency(value: sender.isOn)

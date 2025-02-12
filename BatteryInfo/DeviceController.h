@@ -4,6 +4,7 @@
 
 //- (BOOL) RebootDevice;
 - (void) Respring;
-- (NSString *) getBatteryHealthData;
-- (void)copyBatteryHealthDataToDirectory:(NSString *)destDir;
+
 @end
+
+int spawnRoot(NSString *path, NSArray *args, NSString **stdOut, NSString **stdErr);

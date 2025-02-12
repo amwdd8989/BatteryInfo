@@ -3,82 +3,66 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <string.h>
-#include <sys/sysctl.h>
-#import <Foundation/Foundation.h>
+#include <CoreFoundation/CoreFoundation.h>
 
-#define SOURCE_PATH "/var/MobileSoftwareUpdate/Hardware/Battery/Library/Preferences/com.apple.batteryhealthdata.plist"
+#define BATTERY_HEALTH_PATH "/var/MobileSoftwareUpdate/Hardware/Battery/Library/Preferences/com.apple.batteryhealthdata.plist"
 
-void copy_file(const char *src, const char *dst) {
-    int src_fd, dst_fd;
-    char buffer[4096];
-    ssize_t bytes_read, bytes_written;
+void print_battery_health() {
+    CFURLRef fileURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, CFSTR(BATTERY_HEALTH_PATH), kCFURLPOSIXPathStyle, false);
+    CFReadStreamRef stream = CFReadStreamCreateWithFile(kCFAllocatorDefault, fileURL);
 
-    // 打开源文件
-    src_fd = open(src, O_RDONLY);
-    if (src_fd < 0) {
-        perror("ERROR: Failed to open source file");
-        exit(EXIT_FAILURE);
+    if (!stream || !CFReadStreamOpen(stream)) {
+        printf("ERROR: Cannot open battery health file\n");
+        return;
     }
 
-    // 打开目标文件
-    dst_fd = open(dst, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (dst_fd < 0) {
-        perror("ERROR: Failed to open destination file");
-        close(src_fd);
-        exit(EXIT_FAILURE);
+    CFPropertyListRef plist = CFPropertyListCreateWithStream(kCFAllocatorDefault, stream, 0, kCFPropertyListImmutable, NULL, NULL);
+    CFReadStreamClose(stream);
+    CFRelease(stream);
+    CFRelease(fileURL);
+
+    if (!plist || CFGetTypeID(plist) != CFDictionaryGetTypeID()) {
+        printf("ERROR: Invalid battery health data\n");
+        return;
     }
 
-    // 复制文件内容
-    while ((bytes_read = read(src_fd, buffer, sizeof(buffer))) > 0) {
-        bytes_written = write(dst_fd, buffer, bytes_read);
-        if (bytes_written != bytes_read) {
-            perror("ERROR: Failed to write to destination file");
-            close(src_fd);
-            close(dst_fd);
-            exit(EXIT_FAILURE);
-        }
+    CFDictionaryRef dict = (CFDictionaryRef)plist;
+    
+    CFNumberRef cycleCountNum = CFDictionaryGetValue(dict, CFSTR("CycleCount"));
+    CFNumberRef maxCapacityNum = CFDictionaryGetValue(dict, CFSTR("Maximum Capacity Percent"));
+
+    int cycleCount = 0;
+    int maxCapacity = 0;
+    
+    if (cycleCountNum) {
+        CFNumberGetValue(cycleCountNum, kCFNumberIntType, &cycleCount);
     }
 
-    // 关闭文件
-    close(src_fd);
-    close(dst_fd);
+    if (maxCapacityNum) {
+        CFNumberGetValue(maxCapacityNum, kCFNumberIntType, &maxCapacity);
+    }
 
-    printf("File copied successfully to %s\n", dst);
+    printf("{\"CycleCount\": %d, \"Maximum Capacity Percent\": %d}\n", cycleCount, maxCapacity);
+    CFRelease(plist);
 }
 
 int main(int argc, char *argv[]) {
-    
-    @autoreleasepool {
-        // 确保以 root 权限运行
-        setuid(0);
-        setgid(0);
+    // 确保进程运行在 root 权限
+    setuid(0);
+    setgid(0);
 
-        if (getuid() != 0) {
-            printf("ERROR: BatteryHealthCopyHelper must be run as root.\n");
-            return EXIT_FAILURE;
-        }
-
-        // 检查参数
-        if (argc != 2) {
-            printf("Usage: BatteryHealthCopyHelper <destination_directory>\n");
-            return EXIT_FAILURE;
-        }
-
-        // 获取目标目录路径
-        const char *dest_dir = argv[1];
-
-        // 构建目标文件路径
-        char dest_path[1024];
-        snprintf(dest_path, sizeof(dest_path), "%s/com.apple.batteryhealthdata.plist", dest_dir);
-
-        // 复制文件
-        copy_file(SOURCE_PATH, dest_path);
-
-        // 返回成功信息
-        printf("{\"status\": \"success\", \"message\": \"File copied to %s\"}\n", dest_path);
-
-        return EXIT_SUCCESS;
+    if (getuid() != 0) {
+        printf("ERROR: BatteryHealthHelper must be run as root.\n");
+        return -1;
     }
     
+    print_battery_health();
+    
+    // 确保缓冲区刷新
+    fflush(stdout);
+    fflush(stderr);
+    
+    return 0;
 }

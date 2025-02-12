@@ -64,7 +64,7 @@ class SettingsUtils {
 //    }
     
     func getShowSettingsBatteryInfo() -> Bool {
-        return plistManager.getBool(key: "ShowSettingsBatteryInfo", defaultValue: false)
+        return plistManager.getBool(key: "ShowSettingsBatteryInfo", defaultValue: true)
     }
     
     func setShowSettingsBatteryInfo(value: Bool) {

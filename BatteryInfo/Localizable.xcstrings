@@ -1184,6 +1184,22 @@
         }
       }
     },
+    "SettingsBatteryInfoFooterMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The battery health data in the settings is not generated in real time; the App reads cached data, and the data is for reference only."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置中的电池健康数据不是实时生成，App读取的是缓存数据，仅供参考"
+          }
+        }
+      }
+    },
     "ShowCPUFrequency" : {
       "localizations" : {
         "en" : {
@@ -1228,6 +1244,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "糟糕，虽然您已经使用TrollStore安装了App，但是没有获取到数据，数据接口暂时不支持您的设备，我们会尝试在后续版本中提供替代方案。可能需要耐心等待一段时间，非常抱歉，您可以使用其他替代方案。"
+          }
+        }
+      }
+    },
+    "ThanksForXiaoboVlog" : {
+      "comment" : "特别鸣谢",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Special thanks to Xiaobovlog\nProviding ideas for reading battery health data in settings (RootHelper production ideas)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特别感谢肖博vlog\n提供读取设置中电池健康数据的思路(RootHelper制作思路)"
           }
         }
       }
