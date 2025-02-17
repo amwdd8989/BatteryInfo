@@ -97,6 +97,22 @@
         }
       }
     },
+    "BatteryChargeNormal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery charge status is normal"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池充电状态正常"
+          }
+        }
+      }
+    },
     "BatteryDataSourceMessage" : {
       "localizations" : {
         "en" : {
@@ -113,6 +129,22 @@
         }
       }
     },
+    "BatteryFullyCharged" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery fully charged"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池已充满"
+          }
+        }
+      }
+    },
     "BatteryManufacturer" : {
       "localizations" : {
         "en" : {
@@ -125,6 +157,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "制造商: %@"
+          }
+        }
+      }
+    },
+    "BatteryOverheating" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery overheating"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池温度过高"
           }
         }
       }
@@ -236,7 +284,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "充电功率数据仅供参考，请以功率测量设备数据为准"
+            "value" : "充电功率数据仅供参考，数据并非充电器输出实际功率，请以功率测量设备数据为准"
           }
         }
       }
@@ -365,22 +413,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "复制成功"
-          }
-        }
-      }
-    },
-    "CPUFrequency" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CPU Frequency: %@ MHz (%@ / %@ MHz)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CPU频率: %@ MHz (%@ / %@ MHz)"
           }
         }
       }
@@ -1001,6 +1033,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未充电"
+          }
+        }
+      }
+    },
+    "NotChargingReason" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Charging Reason: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池未充电原因: %@"
+          }
+        }
+      }
+    },
+    "NotIncluded" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<Not Included>"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<未包含>"
           }
         }
       }

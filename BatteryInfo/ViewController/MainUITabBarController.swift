@@ -17,6 +17,11 @@ class MainUITabBarController: UITabBarController {
             view.backgroundColor = .white
         }
         
+        // 隐藏iPad OS 18开始的顶部TabBar
+        if #available(iOS 18.0, *), UIDevice.current.userInterfaceIdiom == .pad {
+            setOverrideTraitCollection(UITraitCollection(horizontalSizeClass: .compact), forChild: self)
+        }
+        
         homeViewController.tabBarItem = createTabBarItem(title: "Home", image: "house", selectedImage: "house.fill", fallbackImage: "")
         historyRecordViewController.tabBarItem = createTabBarItem(title: "History", image: "list.dash", selectedImage: "list.bullet", fallbackImage: "")
         settingsViewController.tabBarItem = createTabBarItem(title: "Settings", image: "gear", selectedImage: "gear.fill", fallbackImage: "")

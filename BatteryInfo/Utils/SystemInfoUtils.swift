@@ -13,9 +13,8 @@ func getDeviceModel() -> String {
 }
 
 func isRunningOniPadOS() -> Bool {
-    let device = UIDevice.current
     // 判断设备是否为 iPad
-    if device.userInterfaceIdiom == .pad {
+    if UIDevice.current.userInterfaceIdiom == .pad {
         // 判断系统版本是否大于等于 13.0
         if #available(iOS 13.0, *) {
             return true

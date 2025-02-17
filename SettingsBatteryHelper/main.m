@@ -33,8 +33,8 @@ void print_battery_health() {
     CFNumberRef cycleCountNum = CFDictionaryGetValue(dict, CFSTR("CycleCount"));
     CFNumberRef maxCapacityNum = CFDictionaryGetValue(dict, CFSTR("Maximum Capacity Percent"));
 
-    int cycleCount = 0;
-    int maxCapacity = 0;
+    int cycleCount = -1;
+    int maxCapacity = -1;
     
     if (cycleCountNum) {
         CFNumberGetValue(cycleCountNum, kCFNumberIntType, &cycleCount);

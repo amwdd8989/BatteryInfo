@@ -13,6 +13,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private var refreshTimer: Timer?
     private var showOSBuildVersion = false
     
+    private var allDatainSection = 4
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,7 +89,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return
         }
         batteryInfo = BatteryRAWInfo(dict: batteryInfoDict)
-        settingsBatteryInfo = BatteryDataController.getSettingsBatteryInfoData()
+        
+        if settingsUtils.getShowSettingsBatteryInfo() { // 只有启动这个功能的时候才会去获取数据
+            settingsBatteryInfo = BatteryDataController.getSettingsBatteryInfoData()
+        }
         
         // 记录历史数据
         if let cycleCount = batteryInfo?.cycleCount, let nominalChargeCapacity = batteryInfo?.nominalChargeCapacity, let designCapacity = batteryInfo?.designCapacity {
@@ -124,7 +129,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: - 设置总分组数量
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        if settingsUtils.getShowSettingsBatteryInfo() {
+            allDatainSection = 4
+            return 5
+        } else {
+            allDatainSection = 3
+            return 4
+        }
     }
     
     // MARK: - 列表总长度
@@ -139,20 +150,25 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         case 1: return 9 // 电池信息
         case 2: // 充电信息
             if settingsUtils.getForceShowChargeingData() {
-                return 9
+                return 10
             } else {
-                if isDeviceCharging() {
-                    return 9
+                if isDeviceCharging() || isChargeByWatts() {
+                    if isNotCharging() { // 判断是否停止充电
+                        return 10
+                    } else {
+                        return 9
+                    }
                 } else {
                     return 1
                 }
             }
         case 3: // 设置中的电池健康信息
-            if settingsUtils.getShowSettingsBatteryInfo() {
-                return 2
-            } else {
-                return 0
-            }
+//            if settingsUtils.getShowSettingsBatteryInfo() {
+//                return 2
+//            } else {
+//                return 0
+//            }
+            return 2
         case 4: return 2
         default: return 0
         }
@@ -203,23 +219,14 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
                 
                 let buildVersion: String = " [" + (getSystemBuildVersion() ?? "") + "]"
+                
                 if self.showOSBuildVersion {
                     cell.textLabel?.text = (cell.textLabel?.text)! + buildVersion
                 }
-                   
+                
             } else if indexPath.row == 1 { // 设备启动时间
-//                cell.textLabel?.text = getDeviceUptime()
                 cell.textLabel?.text = getDeviceUptimeUsingSysctl()
             }
-//            else {
-//                let cpuFrequency = getCPUFrequencyInfo()
-//                if let current = cpuFrequency.current, let min = cpuFrequency.min, let max = cpuFrequency.max {
-//                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CPUFrequency", comment: ""), current, min, max)
-//                } else {
-//                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CPUFrequency", comment: ""), NSLocalizedString("Unknown", comment: ""), NSLocalizedString("Unknown", comment: ""), NSLocalizedString("Unknown", comment: ""))
-//                }
-//            }
-            
         } else if indexPath.section == 1 { // 电池信息
             if indexPath.row == 0 { // 电池健康度
                 if let maximumCapacity = batteryInfo?.maximumCapacity {
@@ -378,25 +385,48 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 } else {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CalculatedChargingPower", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
+            } else if indexPath.row == 9 {
+                if let reason = batteryInfo?.chargerData?.notChargingReason {
+                    if reason == 0 { // 电池充电状态正常
+                        cell.textLabel?.text = NSLocalizedString("BatteryChargeNormal", comment: "")
+                    } else if reason == 1 { // 电池已充满
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("BatteryFullyCharged", comment: ""))
+                    } else if reason == 128 { // 电池未在充电
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("NotCharging", comment: ""))
+                    }  else if reason == 256 { // 电池过热
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("BatteryOverheating", comment: ""))
+                    } else { // 其他状态还不知道含义，等遇到的时候再加上
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), String(reason))
+                    }
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
             }
         }
-        else if indexPath.section == 3 { // 设置中的电池数据
-            if indexPath.row == 0 { // 电池健康度
-                if let maximumCapacity = settingsBatteryInfo?.maximumCapacityPercent {
-                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), String(maximumCapacity))
-                } else {
-                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), NSLocalizedString("Unknown", comment: ""))
-                }
-            } else if indexPath.row == 1 { // 电池循环次数
-                if let cycleCount = settingsBatteryInfo?.cycleCount {
-                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), String(cycleCount))
-                } else {
-                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), NSLocalizedString("Unknown", comment: ""))
+        
+        if settingsUtils.getShowSettingsBatteryInfo() {
+            if indexPath.section == 3 { // 设置中的电池数据
+                if indexPath.row == 0 { // 电池健康度
+                    if let maximumCapacity = settingsBatteryInfo?.maximumCapacityPercent {
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), String(maximumCapacity))
+                    } else {
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                    }
+                } else if indexPath.row == 1 { // 电池循环次数
+                    if let cycleCount = settingsBatteryInfo?.cycleCount {
+                        if cycleCount >= 0 {
+                            cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), String(cycleCount))
+                        } else {
+                            cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), NSLocalizedString("NotIncluded", comment: ""))
+                        }
+                    } else {
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                    }
                 }
             }
         }
-        else if indexPath.section == 4 {
-            
+        
+        if indexPath.section == allDatainSection {
             cell.accessoryType = .disclosureIndicator
             if indexPath.row == 0 { // 显示全部数据
                 cell.textLabel?.text = NSLocalizedString("AllData", comment: "")
@@ -411,13 +441,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
-//        self.navigationController!.pushViewController(RawDataViewController(), animated: true)
-//        self.present(RawDataViewController(), animated: true, completion: nil)
         if indexPath.section == 0 && indexPath.row == 0 {
             self.showOSBuildVersion = !showOSBuildVersion
             tableView.reloadRows(at: [indexPath], with: .none)
         }
-        if indexPath.section == 4 {
+        if indexPath.section == allDatainSection {
             if indexPath.row == 0 { // 显示全部数据
                 let allBatteryDataViewController = AllBatteryDataViewController()
                 allBatteryDataViewController.hidesBottomBarWhenPushed = true // 隐藏底部导航栏
@@ -429,6 +457,31 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             
         }
+    }
+    
+    /// 判断是否在充电，用这个方法可以判断MagSafe外接电池
+    private func isChargeByWatts() -> Bool {
+        if let watts = batteryInfo?.adapterDetails?.watts {
+            return watts > 0
+        } else {
+            return false
+        }
+    }
+    
+    /// 判断是否停止充电
+    private func isNotCharging() -> Bool {
+        if let reason = batteryInfo?.chargerData?.notChargingReason {
+            if reason != 0 {
+                if let current = batteryInfo?.chargerData?.chargingCurrent {
+                    if current == 0 {
+                        return true
+                    }
+                }
+                return true
+            }
+            
+        }
+        return false
     }
     
     

@@ -54,17 +54,8 @@ class SettingsUtils {
         plistManager.apply()
     }
     
-//    func getShowCPUFrequency() -> Bool {
-//        return plistManager.getBool(key: "ShowCPUFrequency", defaultValue: false)
-//    }
-//    
-//    func setShowCPUFrequency(value: Bool) {
-//        plistManager.setBool(key: "ShowCPUFrequency", value: value)
-//        plistManager.apply()
-//    }
-    
     func getShowSettingsBatteryInfo() -> Bool {
-        return plistManager.getBool(key: "ShowSettingsBatteryInfo", defaultValue: true)
+        return plistManager.getBool(key: "ShowSettingsBatteryInfo", defaultValue: false)
     }
     
     func setShowSettingsBatteryInfo(value: Bool) {
