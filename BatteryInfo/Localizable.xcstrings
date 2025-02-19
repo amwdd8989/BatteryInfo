@@ -385,6 +385,22 @@
         }
       }
     },
+    "Copy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
+          }
+        }
+      }
+    },
     "CopyAllData" : {
       "localizations" : {
         "en" : {
@@ -544,6 +560,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "电池数据记录"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除"
           }
         }
       }
@@ -985,6 +1017,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "缺少必要的权利，所以无法获取数据，如果您使用iOS或者iPad OS安装，请在越狱或TrollStore环境下进行安装，如果没有权限，App将无法获取更多电池信息。在未来的版本中您或许可以在权限受限的情况下使用，但是当前版本您必须拥有’IOPMPowerSourceClient’权利。"
+          }
+        }
+      }
+    },
+    "NegotiatingWithCharger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Negotiating with the charger"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在与充电器握手功率"
           }
         }
       }

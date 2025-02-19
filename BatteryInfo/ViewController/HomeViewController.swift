@@ -393,8 +393,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("BatteryFullyCharged", comment: ""))
                     } else if reason == 128 { // 电池未在充电
                         cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("NotCharging", comment: ""))
-                    }  else if reason == 256 { // 电池过热
+                    } else if reason == 256 { // 电池过热
                         cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("BatteryOverheating", comment: ""))
+                    } else if reason == 1024 || reason == 8192 { // 正在与充电器握手
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("NegotiatingWithCharger", comment: ""))
                     } else { // 其他状态还不知道含义，等遇到的时候再加上
                         cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), String(reason))
                     }

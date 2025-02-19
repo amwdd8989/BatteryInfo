@@ -149,24 +149,59 @@ class HistoryRecordViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
     
-    // 滑动删除功能
+    // MARK: - iOS 13+ 长按菜单 (UIContextMenuConfiguration)
+    @available(iOS 13.0, *)
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let editAction = UIAction(title: NSLocalizedString("Copy", comment: ""), image: UIImage(systemName: "square.on.square")) { _ in
+                self.copyRecord(forRowAt: indexPath)
+            }
+            
+            let deleteAction = UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+                self.deleteRecord(forRowAt: indexPath)
+            }
+            
+            return UIMenu(title: "", children: [editAction, deleteAction])
+        }
+    }
+    
+    // MARK: - 左侧添加“复制”按钮
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let copyAction = UIContextualAction(style: .normal, title: NSLocalizedString("Copy", comment: "")) { (action, view, completionHandler) in
+            self.copyRecord(forRowAt: indexPath)
+            completionHandler(true)
+        }
+        copyAction.backgroundColor = .systemBlue // 复制按钮颜色
+        
+        return UISwipeActionsConfiguration(actions: [copyAction])
+    }
+    
+    // MARK: - 滑动删除功能
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             if editingStyle == .delete {
-
-                let alert = UIAlertController(title: NSLocalizedString("DeleteRecordMessage", comment: ""), message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
-                alert.addAction(UIAlertAction(title: NSLocalizedString("Confirm", comment: ""), style: .default, handler: { _ in
-                    // 删除记录
-                    if BatteryRecordDatabaseManager.shared.deleteRecord(byID: self.historyDataRecords[indexPath.row].id) {
-                        self.loadHistoryDataRecords()
-                        self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                    }
-                }))
-                present(alert, animated: true)
+                deleteRecord(forRowAt: indexPath)
             }
         }
     }
     
+    private func copyRecord(forRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        UIPasteboard.general.string = cell?.textLabel?.text
+    }
+    
+    private func deleteRecord(forRowAt indexPath: IndexPath) {
+        let alert = UIAlertController(title: NSLocalizedString("DeleteRecordMessage", comment: ""), message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Confirm", comment: ""), style: .default, handler: { _ in
+            // 删除记录
+            if BatteryRecordDatabaseManager.shared.deleteRecord(byID: self.historyDataRecords[indexPath.row].id) {
+                self.loadHistoryDataRecords()
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        }))
+        present(alert, animated: true)
+    }
     
 }

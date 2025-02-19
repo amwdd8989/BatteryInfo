@@ -4,7 +4,13 @@ struct ChargerData {
     var chargerID: String?
     var chargingCurrent: Int?    // 充电电流
     var chargingVoltage: Int?    // 充电电压
-    var notChargingReason: Int?  // 未充电的原因 256 = 电池温度过高导致停止充电
+    // 未充电的原因 0    = 正常状态
+    //            1    = 电池已充满电
+    //            128  = 电池未在充电
+    //            256  = 电池温度过高导致停止充电
+    //            8192 = (可能是正在握手)
+    //            1024 = (可能是正在握手)
+    var notChargingReason: Int?
     var vacVoltageLimit: Int?    // 限制电压
 }
 
