@@ -152,29 +152,40 @@ class HistoryRecordViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - iOS 13+ 长按菜单 (UIContextMenuConfiguration)
     @available(iOS 13.0, *)
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let editAction = UIAction(title: NSLocalizedString("Copy", comment: ""), image: UIImage(systemName: "square.on.square")) { _ in
-                self.copyRecord(forRowAt: indexPath)
+        if indexPath.section == 1 {
+            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+                let editAction = UIAction(title: NSLocalizedString("Copy", comment: ""), image: UIImage(systemName: "doc.on.doc")) { _ in
+                    self.copyRecord(forRowAt: indexPath)
+                }
+                
+                let deleteAction = UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+                    self.deleteRecord(forRowAt: indexPath)
+                }
+                
+                return UIMenu(title: "", children: [editAction, deleteAction])
             }
-            
-            let deleteAction = UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
-                self.deleteRecord(forRowAt: indexPath)
-            }
-            
-            return UIMenu(title: "", children: [editAction, deleteAction])
         }
+        return nil
     }
     
     // MARK: - 左侧添加“复制”按钮
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let copyAction = UIContextualAction(style: .normal, title: NSLocalizedString("Copy", comment: "")) { (action, view, completionHandler) in
-            self.copyRecord(forRowAt: indexPath)
-            completionHandler(true)
+        if indexPath.section == 1 {
+            let copyAction = UIContextualAction(style: .normal, title: NSLocalizedString("Copy", comment: "")) { (action, view, completionHandler) in
+                self.copyRecord(forRowAt: indexPath)
+                completionHandler(true)
+            }
+            copyAction.backgroundColor = .systemBlue // 复制按钮颜色
+            
+            return UISwipeActionsConfiguration(actions: [copyAction])
         }
-        copyAction.backgroundColor = .systemBlue // 复制按钮颜色
-        
-        return UISwipeActionsConfiguration(actions: [copyAction])
+        return nil
+    }
+    
+    // MARK: - 让 section = 1 才能删除
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1  // 仅允许 section 1 可以删除
     }
     
     // MARK: - 滑动删除功能
