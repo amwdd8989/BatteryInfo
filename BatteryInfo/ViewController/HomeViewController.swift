@@ -150,13 +150,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         case 1: return 9 // 电池信息
         case 2: // 充电信息
             if settingsUtils.getForceShowChargeingData() {
-                return 10
+                return 11
             } else {
                 if isDeviceCharging() || isChargeByWatts() {
                     if isNotCharging() { // 判断是否停止充电
-                        return 10
+                        return 11
                     } else {
-                        return 9
+                        return 10
                     }
                 } else {
                     return 1
@@ -376,26 +376,32 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 } else {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("PowerOptions", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
-            } else if indexPath.row == 6 { // 充电实时电压
+            } else if indexPath.row == 6 { // 限制电压
+                if let limitVoltage = batteryInfo?.chargerData?.vacVoltageLimit {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("LimitVoltage", comment: ""), String(format: "%.2f", Double(limitVoltage) / 1000))
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("LimitVoltage", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 7 { // 充电实时电压
                 if let voltage = batteryInfo?.chargerData?.chargingVoltage {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargingVoltage", comment: ""), String(format: "%.2f", Double(voltage) / 1000))
                 } else {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargingVoltage", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
-            } else if indexPath.row == 7 { // 充电实时电流
+            } else if indexPath.row == 8 { // 充电实时电流
                 if let current = batteryInfo?.chargerData?.chargingCurrent {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargingCurrent", comment: ""), String(format: "%.2f", Double(current) / 1000))
                 } else {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargingCurrent", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
-            } else if indexPath.row == 8 { // 计算的充电功率
+            } else if indexPath.row == 9 { // 计算的充电功率
                 if let current = batteryInfo?.chargerData?.chargingCurrent, let voltage = batteryInfo?.chargerData?.chargingVoltage {
                     let power = (Double(voltage) / 1000) * (Double(current) / 1000)
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CalculatedChargingPower", comment: ""), String(format: "%.2f", power))
                 } else {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("CalculatedChargingPower", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
-            } else if indexPath.row == 9 {
+            } else if indexPath.row == 10 {
                 if let reason = batteryInfo?.chargerData?.notChargingReason {
                     if reason == 0 { // 电池充电状态正常
                         cell.textLabel?.text = NSLocalizedString("BatteryChargeNormal", comment: "")

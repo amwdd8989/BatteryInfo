@@ -1036,6 +1036,22 @@
         }
       }
     },
+    "LimitVoltage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limit Voltage: %@V"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "限制电压: %@V"
+          }
+        }
+      }
+    },
     "Manual" : {
       "localizations" : {
         "en" : {
@@ -1412,7 +1428,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Serial Number： %@"
+            "value" : "Serial Number: %@"
           }
         },
         "zh-Hans" : {

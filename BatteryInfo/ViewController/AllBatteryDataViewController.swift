@@ -80,7 +80,7 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
         switch section {
         case 0: return 2
         case 1: return 2
-        case 2: return 2
+        case 2: return 3
         case 3:
             if isDeviceCharging() || chargerHaveName() {
                 return 8
@@ -166,6 +166,12 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("BootVoltage", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
             } else if indexPath.row == 2 {
+                if let limitVoltage = batteryInfo?.chargerData?.vacVoltageLimit {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("LimitVoltage", comment: ""), String(format: "%.2f", Double(limitVoltage) / 1000))
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("LimitVoltage", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 3 {
                 if let bestAdapterIndex = batteryInfo?.bestAdapterIndex {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("BestAdapterInfo", comment: ""), String(bestAdapterIndex + 1))
                 } else {
