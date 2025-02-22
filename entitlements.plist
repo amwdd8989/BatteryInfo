@@ -16,5 +16,11 @@
 	<array>
 		<string>IOPMPowerSourceClient</string>
 	</array>
+	<key>com.apple.security.exception.iokit-user-client-class</key>
+	<array>
+    	<string>IOAccelerator</string>
+    	<string>IOGPUDeviceUserClient</string>
+    	<string>IOSurfaceRootUserClient</string>
+	</array>
 </dict>
 </plist>

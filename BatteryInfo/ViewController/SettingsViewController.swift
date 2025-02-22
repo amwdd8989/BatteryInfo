@@ -3,7 +3,7 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let versionCode = "1.1.3"
+    let versionCode = "1.1.4"
     
     private var tableView = UITableView()
     

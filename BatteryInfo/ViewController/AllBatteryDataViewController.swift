@@ -65,7 +65,7 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
         DispatchQueue.main.async {
             if self.isViewLoaded && self.view.window != nil {
                 // 刷新列表
-                self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
+                self.tableView.reloadData()
             }
         }
     }
