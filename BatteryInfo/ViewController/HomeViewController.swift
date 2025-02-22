@@ -198,6 +198,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else if section == 3 {
             if settingsUtils.getShowSettingsBatteryInfo() {
                 return NSLocalizedString("SettingsBatteryInfoFooterMessage", comment: "")
+            } else {
+                return NSLocalizedString("BatteryDataSourceMessage", comment: "")
             }
         } else if section == 4 {
             return NSLocalizedString("BatteryDataSourceMessage", comment: "")
@@ -218,10 +220,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     cell.textLabel?.text = getDeviceName() + " " + getDiskTotalSpace() + " (" + String.localizedStringWithFormat(NSLocalizedString("iPadOSVersion", comment: ""), UIDevice.current.systemVersion) + ")"
                 }
                 
-                let buildVersion: String = " [" + (getSystemBuildVersion() ?? "") + "]"
-                
                 if self.showOSBuildVersion {
+                    let buildVersion: String = " [" + (getSystemBuildVersion() ?? "") + "]"
                     cell.textLabel?.text = (cell.textLabel?.text)! + buildVersion
+                }
+                
+                if let regionCode = getDeviceRegionCode() {
+                    cell.textLabel?.text = (cell.textLabel?.text)! + " " + regionCode
                 }
                 
             } else if indexPath.row == 1 { // 设备启动时间
@@ -296,11 +301,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 default: cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("IsCharging", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
                 
-                if let isCharging = batteryInfo?.isCharging {
-                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("IsCharging", comment: ""), isCharging ? NSLocalizedString("Charging", comment: "") : NSLocalizedString("NotCharging", comment: ""))
-                } else { // 如果没有Root权限，就用官方提供的方法来检查设备是否在充电
-                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("IsCharging", comment: ""), isDeviceCharging() ? NSLocalizedString("Charging", comment: "") : NSLocalizedString("NotCharging", comment: ""))
-                }
+//                if let isCharging = batteryInfo?.isCharging {
+//                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("IsCharging", comment: ""), isCharging ? NSLocalizedString("Charging", comment: "") : NSLocalizedString("NotCharging", comment: ""))
+//                } else { // 如果没有Root权限，就用官方提供的方法来检查设备是否在充电
+//                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("IsCharging", comment: ""), isDeviceCharging() ? NSLocalizedString("Charging", comment: "") : NSLocalizedString("NotCharging", comment: ""))
+//                }
                 
             } else if indexPath.row == 1 { // 充电方式
                 if let description = batteryInfo?.adapterDetails?.description {
@@ -362,7 +367,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         )
                     }.joined(separator: "\n"))
                     
-                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("PowerOptions", comment: ""), powerOptions)
+                    if usbHvcMenu.count == 0 {
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("PowerOptions", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                    } else {
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("PowerOptions", comment: ""), powerOptions)
+                    }
+                    
                 } else {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("PowerOptions", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
@@ -393,7 +403,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("BatteryFullyCharged", comment: ""))
                     } else if reason == 128 { // 电池未在充电
                         cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("NotCharging", comment: ""))
-                    } else if reason == 256 { // 电池过热
+                    } else if reason == 256 || reason == 272 { // 电池过热
                         cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("BatteryOverheating", comment: ""))
                     } else if reason == 1024 || reason == 8192 { // 正在与充电器握手
                         cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("NotChargingReason", comment: ""), NSLocalizedString("NegotiatingWithCharger", comment: ""))
@@ -446,8 +456,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if indexPath.section == 0 && indexPath.row == 0 {
             self.showOSBuildVersion = !showOSBuildVersion
             tableView.reloadRows(at: [indexPath], with: .none)
-        }
-        if indexPath.section == allDatainSection {
+        } else if indexPath.section == allDatainSection {
             if indexPath.row == 0 { // 显示全部数据
                 let allBatteryDataViewController = AllBatteryDataViewController()
                 allBatteryDataViewController.hidesBottomBarWhenPushed = true // 隐藏底部导航栏
@@ -485,7 +494,5 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         return false
     }
-    
-    
 
 }

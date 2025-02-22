@@ -50,6 +50,7 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadBatteryData()
     }
     
@@ -71,7 +72,7 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - 设置总分组数量
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 5
     }
     
     // MARK: - 列表总长度
@@ -79,8 +80,24 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
         switch section {
         case 0: return 2
         case 1: return 2
+        case 2: return 2
+        case 3:
+            if isDeviceCharging() || chargerHaveName() {
+                return 8
+            } else {
+                return 1
+            }
+        case 4: return 1
         default: return 0
         }
+    }
+    
+    // MARK: - 设置每个分组的顶部标题
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 3 {
+            return NSLocalizedString("ChargerInfo", comment: "")
+        }
+        return nil
     }
     
     // MARK: - 设置每个分组的底部标题 可以为分组设置尾部文本，如果没有尾部可以返回 nil
@@ -88,7 +105,11 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
         
         if section == 0 {
             return NSLocalizedString("ManufacturerDataSourceMessage", comment: "")
-        } else if section == 1 {
+        } else if section == 3 {
+            if chargerHaveName() {
+                return NSLocalizedString("ChargerNameInfoFooterMessage", comment: "")
+            }
+        } else if section == 4 {
             return NSLocalizedString("BatteryDataSourceMessage", comment: "")
         }
         return nil
@@ -96,6 +117,7 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+        cell.accessoryType = .none
         cell.textLabel?.numberOfLines = 0 // 允许换行
         
         if indexPath.section == 0 {
@@ -130,6 +152,84 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MinimumQmax", comment: ""), NSLocalizedString("Unknown", comment: ""))
                 }
             }
+        } else if indexPath.section == 2 {
+            if indexPath.row == 0 {
+                if let batteryInstalled = batteryInfo?.batteryInstalled {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("BatteryInstalled", comment: ""), batteryInstalled == 1 ? NSLocalizedString("Yes", comment: "") : NSLocalizedString("No", comment: ""))
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("BatteryInstalled", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 1 {
+                if let bootVoltage = batteryInfo?.bootVoltage {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("BootVoltage", comment: ""), String(format: "%.2f", Double(bootVoltage) / 1000))
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("BootVoltage", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 2 {
+                if let bestAdapterIndex = batteryInfo?.bestAdapterIndex {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("BestAdapterInfo", comment: ""), String(bestAdapterIndex + 1))
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("BestAdapterInfo", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            }
+        } else if indexPath.section == 3 {
+            if indexPath.row == 0 {
+                switch getBatteryState() {
+                case.charging: cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("IsCharging", comment: ""), NSLocalizedString("Charging", comment: ""))
+                case.unplugged: cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("IsCharging", comment: ""), NSLocalizedString("NotCharging", comment: ""))
+                case.full: cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("IsCharging", comment: ""), NSLocalizedString("CharingFull", comment: ""))
+                default: cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("IsCharging", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 1 {
+                if let description = batteryInfo?.adapterDetails?.description {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargeDescription", comment: ""), description)
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargeDescription", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 2 {
+                if let chargerName = batteryInfo?.adapterDetails?.name {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargerName", comment: ""), chargerName)
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargerName", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 3 {
+                if let chargerManufacturer = batteryInfo?.adapterDetails?.manufacturer {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargerManufacturer", comment: ""), chargerManufacturer)
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargerManufacturer", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 4 {
+                if let chargerModel = batteryInfo?.adapterDetails?.model {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargerModel", comment: ""), chargerModel)
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargerModel", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 5 {
+                if let chargerSerialNumber = batteryInfo?.adapterDetails?.serialString {
+                    if isMaskSerialNumber {
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("SerialNumber", comment: ""), BatteryDataController.maskSerialNumber(chargerSerialNumber))
+                    } else {
+                        cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("SerialNumber", comment: ""), chargerSerialNumber)
+                    }
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("SerialNumber", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 6 {
+                if let chargerHardwareVersion = batteryInfo?.adapterDetails?.hwVersion {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargerHardwareVersion", comment: ""), chargerHardwareVersion)
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargerHardwareVersion", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            } else if indexPath.row == 7 {
+                if let chargerFirmwareVersion = batteryInfo?.adapterDetails?.fwVersion {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargerFirmwareVersion", comment: ""), chargerFirmwareVersion)
+                } else {
+                    cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("ChargerFirmwareVersion", comment: ""), NSLocalizedString("Unknown", comment: ""))
+                }
+            }
+        } else if indexPath.section == 4 {
+            cell.textLabel?.text = NSLocalizedString("RawData", comment: "")
+            cell.accessoryType = .disclosureIndicator
         }
         return cell
     }
@@ -141,8 +241,21 @@ class AllBatteryDataViewController: UIViewController, UITableViewDataSource, UIT
         
         if indexPath.section == 0 && indexPath.row == 0 {
             self.isMaskSerialNumber = !isMaskSerialNumber
-            tableView.reloadRows(at: [indexPath], with: .none)
+            tableView.reloadRows(at: [indexPath, IndexPath(row: 5, section: 3)], with: .none)
+        } else if indexPath.section == 3 && indexPath.row == 5 {
+            self.isMaskSerialNumber = !isMaskSerialNumber
+            tableView.reloadRows(at: [indexPath, IndexPath(row: 0, section: 0)], with: .none)
+        } else if indexPath.section == 4 {
+            let rawDataViewController = RawDataViewController()
+            rawDataViewController.hidesBottomBarWhenPushed = true // 隐藏底部导航栏
+            self.navigationController?.pushViewController(rawDataViewController, animated: true)
         }
         
+        
+    }
+    
+    // 判断充电器是否有厂商信息
+    func chargerHaveName() -> Bool {
+        return (batteryInfo?.adapterDetails?.name) != nil
     }
 }

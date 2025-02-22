@@ -15,6 +15,12 @@ struct AdapterDetails {
     var usbHvcMenu: [UsbHvcOption] = []
     var voltage: Int?
     var watts: Int?
+    var name: String?           // 充电器名字
+    var manufacturer: String?   // 充电器的制造厂家
+    var model: String?          // 充电器型号
+    var serialString: String?   // 充电器的序列号
+    var hwVersion: String?      // 充电器的硬件版本
+    var fwVersion: String?      // 充电器的软件版本
 
     // 解析字典数据
     init(dict: [String: Any]) {
@@ -30,6 +36,13 @@ struct AdapterDetails {
         self.usbHvcHvcIndex = dict["UsbHvcHvcIndex"] as? Int
         self.voltage = dict["Voltage"] as? Int
         self.watts = dict["Watts"] as? Int
+        
+        self.name = dict["Name"] as? String
+        self.model = dict["Model"] as? String
+        self.manufacturer = dict["Manufacturer"] as? String
+        self.serialString = dict["SerialString"] as? String
+        self.hwVersion = dict["HwVersion"] as? String
+        self.fwVersion = dict["FwVersion"] as? String
         
         // 解析 USB HVC 选项
         if let usbHvcMenuArray = dict["UsbHvcMenu"] as? [[String: Any]] {

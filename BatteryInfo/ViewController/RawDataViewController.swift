@@ -16,11 +16,13 @@ class RawDataViewController: UIViewController, UITableViewDataSource, UITableVie
             view.backgroundColor = .white
         }
         
+        // iOS 15 之后的版本使用新的UITableView样式
         if #available(iOS 15.0, *) {
             tableView = UITableView(frame: .zero, style: .insetGrouped)
         } else {
-            tableView = UITableView()
+            tableView = UITableView(frame: .zero, style: .grouped)
         }
+        
         // 初始化 UITableView
         tableView.dataSource = self
         tableView.delegate = self

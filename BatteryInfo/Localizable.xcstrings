@@ -145,6 +145,22 @@
         }
       }
     },
+    "BatteryInstalled" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery Installed: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池已安装: %@"
+          }
+        }
+      }
+    },
     "BatteryManufacturer" : {
       "localizations" : {
         "en" : {
@@ -173,6 +189,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "电池温度过高"
+          }
+        }
+      }
+    },
+    "BestAdapterInfo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best Charge Adapter: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最佳充电适配器: %@"
+          }
+        }
+      }
+    },
+    "BootVoltage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boot Voltage: %@V"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开机电压: %@V"
           }
         }
       }
@@ -285,6 +333,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "充电功率数据仅供参考，数据并非充电器输出实际功率，请以功率测量设备数据为准"
+          }
+        }
+      }
+    },
+    "ChargerFirmwareVersion" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charger Firmware Version: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电器固件版本: %@"
+          }
+        }
+      }
+    },
+    "ChargerHardwareVersion" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charger Hardware Version: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电器硬件版本: %@"
+          }
+        }
+      }
+    },
+    "ChargerInfo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charger Info"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电器信息"
+          }
+        }
+      }
+    },
+    "ChargerManufacturer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charger Manufacturer: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电器制造商: %@"
+          }
+        }
+      }
+    },
+    "ChargerModel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charger Model: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电器型号: %@"
+          }
+        }
+      }
+    },
+    "ChargerName" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charger Name: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电器名称: %@"
+          }
+        }
+      }
+    },
+    "ChargerNameInfoFooterMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The charger information is for reference only. If you connect a charger without a name after connecting a charger with a name, the charger name still displays the previous charger name. This may be a system bug, and the device can return to normal after a restart."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充电器信息仅供参考，如果您在连接带有名称的充电器后连接不带名称的充电器，充电器名称仍然显示之前的充电器名称，这可能是系统的bug，重启设备后可恢复正常"
           }
         }
       }

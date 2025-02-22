@@ -9,6 +9,9 @@ class BatteryDataRecord {
         case ManualRecord = 3   // 手动记录，但是数据是自己填写的
     }
     
+    // 数据库表的
+    private let dbTableVersion = 1
+    
     // ID
     let id: Int
     

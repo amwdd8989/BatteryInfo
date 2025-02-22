@@ -2,11 +2,13 @@ import Foundation
 
 // 定义一个结构体来存储IO接口提供的电池原始信息
 struct BatteryRAWInfo {
-    var bootPathUpdated: Int?
-    var serialNumber: String? // 电池序列号
-    var voltage: Int? // 当前电压
-    var instantAmperage: Int?  // 当前电流
-    var currentCapacity: Int? // 当前电量百分比
+    var batteryInstalled: Int?        // 电池已安装
+    var bootPathUpdated: Int?         //
+    var bootVoltage: Int?             // 开机电压
+    var serialNumber: String?         // 电池序列号
+    var voltage: Int?                 // 当前电压
+    var instantAmperage: Int?         // 当前电流
+    var currentCapacity: Int?         // 当前电量百分比
     var appleRawCurrentCapacity: Int? // 当前电池剩余的毫安数
     var designCapacity: Int?  // 电池设计容量
     var nominalChargeCapacity: Int? // 电池当前的最大容量
@@ -15,13 +17,17 @@ struct BatteryRAWInfo {
     var temperature: Int?             // 电池温度
     var batteryData: BatteryData?     // 嵌套 BatteryData
     var kioskMode: KioskMode?         // 嵌套 KioskMode
+    var bestAdapterIndex: Int?        // 最合适的充电器序号
     var adapterDetails: AdapterDetails? // 充电器信息
+    var appleRawAdapterDetails: [AdapterDetails] // 充电器原始信息
     var chargerData: ChargerData?     // 嵌套 ChargerData
-    var maximumCapacity: String?
+    var maximumCapacity: String?      // 最大可充电的百分比，默认是100
 }
 
 extension BatteryRAWInfo {
     init(dict: [String: Any]) {
+        self.batteryInstalled = dict["BatteryInstalled"] as? Int
+        self.bootVoltage = dict["BootVoltage"] as? Int
         self.bootPathUpdated = dict["BootPathUpdated"] as? Int
         self.serialNumber = dict["Serial"] as? String
         self.voltage = dict["Voltage"] as? Int
@@ -33,6 +39,7 @@ extension BatteryRAWInfo {
         self.isCharging = (dict["IsCharging"] as? Int) == 1
         self.cycleCount = dict["CycleCount"] as? Int
         self.temperature = dict["Temperature"] as? Int
+        self.bestAdapterIndex = dict["BestAdapterIndex"] as? Int
         
         if let nominal = nominalChargeCapacity, let design = designCapacity, design > 0 {
             self.maximumCapacity = BatteryDataController.getFormatMaximumCapacity(nominalChargeCapacity: nominal, designCapacity: design)
@@ -54,6 +61,11 @@ extension BatteryRAWInfo {
         
         if let adapterDataDict = dict["AdapterDetails"] as? [String: Any] {
             self.adapterDetails = AdapterDetails(dict: adapterDataDict)
+        }
+        
+        self.appleRawAdapterDetails = []
+        if let rawAdapterArray = dict["AppleRawAdapterDetails"] as? [[String: Any]] {
+            self.appleRawAdapterDetails = rawAdapterArray.map { AdapterDetails(dict: $0) }
         }
     }
 }
