@@ -113,6 +113,22 @@
         }
       }
     },
+    "BatteryDataRecordsCSVName" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BatteryDataRecords"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池历史数据记录"
+          }
+        }
+      }
+    },
     "BatteryDataSourceMessage" : {
       "localizations" : {
         "en" : {
@@ -885,6 +901,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "每天"
+          }
+        }
+      }
+    },
+    "ExportAllRecordsToCSV" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export all records to CSV"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将所有记录导出到CSV"
           }
         }
       }

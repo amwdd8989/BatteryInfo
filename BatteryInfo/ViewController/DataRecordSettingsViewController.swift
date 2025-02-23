@@ -7,9 +7,9 @@ class DataRecordSettingsViewController: UIViewController, UITableViewDelegate, U
     
     private let settingsUtils = SettingsUtils.instance
     
-    private let tableTitleList = [nil, NSLocalizedString("RecordFrequencySettings", comment: "记录频率设置"), nil]
+    private let tableTitleList = [nil, NSLocalizedString("RecordFrequencySettings", comment: "记录频率设置"), nil, nil]
     
-    private let tableCellList = [[NSLocalizedString("Enable", comment: "启用"), NSLocalizedString("HistoryRecordViewInHomeView", comment: "在主界面显示历史记录界面")], [NSLocalizedString("Automatic", comment: ""), NSLocalizedString("DataChanged", comment: ""), NSLocalizedString("EveryDay", comment: ""), NSLocalizedString("Manual", comment: "")], [NSLocalizedString("DeleteAllRecords", comment: "")]]
+    private let tableCellList = [[NSLocalizedString("Enable", comment: "启用"), NSLocalizedString("HistoryRecordViewInHomeView", comment: "在主界面显示历史记录界面")], [NSLocalizedString("Automatic", comment: ""), NSLocalizedString("DataChanged", comment: ""), NSLocalizedString("EveryDay", comment: ""), NSLocalizedString("Manual", comment: "")], [NSLocalizedString("ExportAllRecordsToCSV", comment: "")], [NSLocalizedString("DeleteAllRecords", comment: "")]]
     
     private var reloadMainTabBar = false
     
@@ -95,6 +95,9 @@ class DataRecordSettingsViewController: UIViewController, UITableViewDelegate, U
             }
         } else if indexPath.section == 2 {
             cell.textLabel?.textAlignment = .center
+            cell.textLabel?.textColor = .systemBlue
+        } else if indexPath.section == 3 {
+            cell.textLabel?.textAlignment = .center
             cell.textLabel?.textColor = .systemRed
         }
         
@@ -113,6 +116,12 @@ class DataRecordSettingsViewController: UIViewController, UITableViewDelegate, U
             // 设置当前的cell选中状态
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         } else if indexPath.section == 2 {
+            // 导出记录为CSV
+            if let csvFileURL = BatteryRecordDatabaseManager.shared.exportToCSV() {
+                let activityVC = UIActivityViewController(activityItems: [csvFileURL], applicationActivities: nil)
+                present(activityVC, animated: true, completion: nil)
+            }
+        } else if indexPath.section == 3 {
             // 删除全部数据的按钮
             let alert = UIAlertController(
                     title: NSLocalizedString("DeleteAllRecordsTitle", comment: "确定要删除所有数据吗？"),

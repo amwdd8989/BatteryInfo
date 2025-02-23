@@ -191,6 +191,38 @@ class BatteryRecordDatabaseManager {
         return latestRecord
     }
     
+    // 导出全部记录为CSV
+    func exportToCSV() -> URL? {
+        let records = fetchAllRecords()
+        guard !records.isEmpty else {
+            NSLog("No records found to export.")
+            return nil
+        }
+        
+        let fileName = NSLocalizedString("BatteryDataRecordsCSVName", comment: "BatteryDataRecords").appending(".csv")
+        let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+        
+        var csvText = "ID,CreateDate,CycleCount,NominalChargeCapacity,DesignCapacity,MaximumCapacity\n"
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        for record in records {
+            let createDateStr = dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(record.createDate)))
+            let line = "\(record.id),\(createDateStr),\(record.cycleCount),\(record.nominalChargeCapacity ?? 0),\(record.designCapacity ?? 0),\(record.maximumCapacity ?? "N/A")\n"
+            csvText.append(line)
+        }
+        
+        do {
+            try csvText.write(to: fileURL, atomically: true, encoding: .utf8)
+            NSLog("CSV file created at: \(fileURL.path)")
+            return fileURL
+        } catch {
+            NSLog("Failed to write CSV file: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
     // 删除全部数据
     func deleteAllRecords() {
         let deleteQuery = "DELETE FROM \(recordTableName);"
