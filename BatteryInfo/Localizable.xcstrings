@@ -114,6 +114,7 @@
       }
     },
     "BatteryDataRecordsCSVName" : {
+      "comment" : "BatteryDataRecords",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -11,7 +11,7 @@ NSDictionary *getBatteryInfo() {
     IOMasterPort(MACH_PORT_NULL, &masterPort);
 
     // 匹配电池服务
-    matchingDict = IOServiceMatching("AppleSmartBattery");
+    matchingDict = IOServiceMatching("IOPMPowerSource");
     service = IOServiceGetMatchingService(masterPort, matchingDict);
 
     if (service) {
