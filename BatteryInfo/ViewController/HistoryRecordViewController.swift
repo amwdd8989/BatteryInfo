@@ -7,6 +7,8 @@ class HistoryRecordViewController: UIViewController, UITableViewDelegate, UITabl
     
     private var historyDataRecords: [BatteryDataRecord] = []
     
+    private var recordShowDesignCapacity = SettingsUtils.instance.getRecordShowDesignCapacity()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +56,7 @@ class HistoryRecordViewController: UIViewController, UITableViewDelegate, UITabl
         // 防止 ViewController 释放后仍然执行 UI 更新
         DispatchQueue.main.async {
             if self.isViewLoaded && self.view.window != nil {
+                self.recordShowDesignCapacity = SettingsUtils.instance.getRecordShowDesignCapacity()
                 // 刷新列表
                 self.tableView.reloadData()
             }
@@ -111,9 +114,16 @@ class HistoryRecordViewController: UIViewController, UITableViewDelegate, UITabl
                 if let nominal = recordData.nominalChargeCapacity, let design = recordData.designCapacity {
                     cell.textLabel?.text = String.localizedStringWithFormat(NSLocalizedString("MaximumCapacity", comment: ""), BatteryDataController.getFormatMaximumCapacity(nominalChargeCapacity: nominal, designCapacity: design)) + "\n" +
                     String.localizedStringWithFormat(NSLocalizedString("CycleCount", comment: ""), String(recordData.cycleCount)) + "\n" +
-                    String.localizedStringWithFormat(NSLocalizedString("RemainingCapacity", comment: ""), String(nominal)) + "\n" +
-                    String.localizedStringWithFormat(NSLocalizedString("DesignCapacity", comment: ""), String(design)) + "\n" +
-                    String.localizedStringWithFormat(NSLocalizedString("RecordCreateDate", comment: ""), BatteryDataController.formatTimestamp(recordData.createDate))
+                    String.localizedStringWithFormat(NSLocalizedString("RemainingCapacity", comment: ""), String(nominal)) + "\n"
+                    
+                    if self.recordShowDesignCapacity { // 是否显示设计容量
+                        cell.textLabel?.text = cell.textLabel?.text?.appending(
+                            String.localizedStringWithFormat(NSLocalizedString("DesignCapacity", comment: ""), String(design)) + "\n" +
+                            String.localizedStringWithFormat(NSLocalizedString("RecordCreateDate", comment: ""), BatteryDataController.formatTimestamp(recordData.createDate)))
+                    } else {
+                        cell.textLabel?.text = cell.textLabel?.text?.appending(
+                            String.localizedStringWithFormat(NSLocalizedString("RecordCreateDate", comment: ""), BatteryDataController.formatTimestamp(recordData.createDate)))
+                    }
                 }
                 
             }

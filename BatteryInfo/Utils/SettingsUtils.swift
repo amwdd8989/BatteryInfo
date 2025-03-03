@@ -99,6 +99,16 @@ class SettingsUtils {
         plistManager.apply()
     }
     
+    // 获取是否在历史记录中显示设计容量
+    func getRecordShowDesignCapacity() -> Bool {
+        return plistManager.getBool(key: "RecordShowDesignCapacity", defaultValue: true)
+    }
+    
+    func setRecordShowDesignCapacity(value: Bool) {
+        plistManager.setBool(key: "RecordShowDesignCapacity", value: value)
+        plistManager.apply()
+    }
+    
     /// 获取记录电池记录频率设置
     func getRecordFrequency() -> RecordFrequency {
         var value = getRecordFrequencyRawValue()

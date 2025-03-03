@@ -1423,6 +1423,22 @@
         }
       }
     },
+    "RecordShowDesignCapacity" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record show 'Design Capacity'"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记录中显示'设计容量'"
+          }
+        }
+      }
+    },
     "RemainingCapacity" : {
       "extractionState" : "manual",
       "localizations" : {
